@@ -530,6 +530,12 @@ static int8_t processKana(const uint8_t* current, const uint8_t* processed, uint
     const uint8_t* dakuon;
     int8_t xmit = XMIT_NORMAL;
 
+    /*
+     * First check all non-Shift key modifiers, and save it into modifiers. The
+     * shift key can be handled differently based on left or right shift, and it
+     * can also be "sticky" (JIS X6004) where the shift case can be selected by
+     * pressing and releasing a shift key alone before pressing the next key.
+     */
     modifiers = current[0] & ~MOD_SHIFT;
     report[0] = modifiers;
     for (int8_t i = 2; i < 8 && count < 8; ++i) {
@@ -646,7 +652,7 @@ static int8_t processKana(const uint8_t* current, const uint8_t* processed, uint
 
 int8_t isKanaMode(const uint8_t* current)
 {
-    return kana_led && !(current[0] & (MOD_ALT | MOD_CONTROL | MOD_GUI)) && !(current[1] & (MOD_FN | MOD_PAD)) && mode != KANA_ROMAJI && (!eisuu_mode || !is109());
+    return kana_led && !(current[0] & (MOD_ALT | MOD_CONTROL | MOD_GUI)) && !(current[1] & (MOD_FN | MOD_FN2 | MOD_PAD)) && mode != KANA_ROMAJI && (!eisuu_mode || !is109());
 }
 
 uint8_t toggleKanaMode(uint8_t key, uint8_t mod, int8_t make)

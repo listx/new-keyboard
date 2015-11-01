@@ -21,7 +21,7 @@
 #include <string.h>
 #include <system.h>
 
-NVRAM_DATA(BASE_QWERTY, KANA_ROMAJI, OS_PC, DELAY_12, MOD_DEFAULT, LED_DEFAULT, IME_MS, PAD_SENSE_1);
+NVRAM_DATA(BASE_ZQ, KANA_ROMAJI, OS_PC, DELAY_12, MOD_DEFAULT, LED_DEFAULT, IME_MS, PAD_SENSE_1);
 
 uint8_t os;
 uint8_t mod;
@@ -83,6 +83,33 @@ static uint8_t const matrixFn[8][12][3] =
     {{KEY_LEFTCONTROL, KEY_A}, {KEY_LEFTCONTROL, KEY_S}, {KEY_PAGEDOWN}, {KEY_LEFTCONTROL, KEY_F}, {KEY_LEFTCONTROL, KEY_G}, {KEY_ESCAPE}, {KEY_CAPS_LOCK}, {KEY_HOME}, {KEY_LEFTARROW}, {KEY_DOWNARROW}, {KEY_RIGHTARROW}, {KEY_END}},
     {{KEY_LEFTCONTROL, KEY_Z}, {KEY_LEFTCONTROL, KEY_X}, {KEY_LEFTCONTROL, KEY_C}, {KEY_LEFTCONTROL, KEY_V}, {KEY_LANG2}, {KEY_TAB}, {KEY_ENTER}, {KEY_LANG1}, {KEY_LEFTSHIFT, KEY_LEFTARROW}, {KEY_LEFTSHIFT, KEY_DOWNARROW}, {KEY_LEFTSHIFT, KEY_RIGHTARROW}, {KEY_LEFTSHIFT, KEY_END}},
     {{0}, {0}, {0}, {0}, {KEY_LEFTCONTROL, KEY_BACKSPACE}, {0}, {0}, {KEY_LEFTCONTROL, KEY_SPACEBAR}, {0}, {0}, {0}, {0}}
+};
+
+static uint8_t const matrixFnZq[2][8][12][3] =
+{
+    /* KEY_FN */
+    {
+    {{00}, {KEY_F2}, {KEY_F3}, {KEY_F4}, {KEY_F5}, {KEY_F6}, {KEY_F7}, {KEY_F8}, {KEY_F9}, {KEY_MUTE}, {KEY_VOLUME_DOWN}, {00}},
+    {{KEY_RIGHT_BRACKET}, {KEY_F1}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {KEY_VOLUME_UP}, {KEY_LEFTSHIFT, KEY_PERIOD}},
+    {{KEY_LEFTCONTROL, KEY_LEFTSHIFT, KEY_Z}, {00}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {00}, {KEY_PRINTSCREEN}},
+    {{00}, {00}, {KEY_LEFTSHIFT, KEY_INSERT}, {00}, {00}, {0}, {0}, {00}, {00}, {KEY_LEFT_GUI, KEY_X}, {00}, {KEY_RIGHTSHIFT}},
+    {{KEYPAD_000}, {KEY_7}, {KEY_8}, {KEY_9}, {00}, {0}, {0}, {KEY_LEFTSHIFT, KEY_5}, {KEY_LEFT_BRACKET}, {KEY_BACKSLASH}, {KEY_LEFTSHIFT, KEY_BACKSLASH}, {KEY_RIGHT_BRACKET}},
+    {{KEYPAD_00}, {KEY_4}, {KEY_5}, {KEY_6}, {00}, {00}, {00}, {KEY_LEFTSHIFT, KEY_3}, {KEY_LEFTSHIFT, KEY_LEFT_BRACKET}, {KEY_LEFTSHIFT, KEY_9}, {KEY_LEFTSHIFT, KEY_0}, {KEY_LEFTSHIFT, KEY_RIGHT_BRACKET}},
+    {{KEY_0}, {KEY_1}, {KEY_2}, {KEY_3}, {KEY_LANG2}, {00}, {00}, {KEY_LEFTSHIFT, KEY_6}, {KEY_LEFTSHIFT, KEY_COMMA}, {KEY_LEFTSHIFT, KEY_EQUAL}, {KEY_LEFTSHIFT, KEY_2}, {KEY_LEFTSHIFT, KEY_PERIOD}},
+    {{00}, {00}, {KEY_CAPS_LOCK}, {KEY_BACKSPACE}, {KEY_DELETE}, {KEY_LEFTCONTROL}, {00}, {00}, {KEY_FN}, {KEY_LEFTALT}, {KEY_RIGHTALT}, {00}}
+    },
+
+    /* KEY_FN2 */
+    {
+    {{00}, {00}, {00}, {00}, {00}, {00}, {00}, {00}, {00}, {00}, {00}, {00}},
+    {{00}, {00}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {00}, {00}},
+    {{00}, {00}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {00}, {00}},
+    {{KEY_LEFTSHIFT}, {00}, {00}, {00}, {00}, {0}, {0}, {00}, {00}, {00}, {00}, {00}},
+    {{KEY_F12}, {KEY_F7}, {KEY_F8}, {KEY_F9}, {00}, {0}, {0}, {00}, {00}, {KEY_UPARROW}, {00}, {00}},
+    {{KEY_F11}, {KEY_F4}, {KEY_F5}, {KEY_F6}, {00}, {00}, {00}, {00}, {KEY_LEFTARROW}, {KEY_DOWNARROW}, {KEY_RIGHTARROW}, {00}},
+    {{KEY_F10}, {KEY_F1}, {KEY_F2}, {KEY_F3}, {00}, {00}, {00}, {00}, {00}, {00}, {00}, {00}},
+    {{00}, {00}, {KEY_CAPS_LOCK}, {KEY_BACKSPACE}, {KEY_DELETE}, {KEY_LEFTCONTROL}, {00}, {00}, {00}, {KEY_LEFTALT}, {KEY_RIGHTALT}, {00}}
+    },
 };
 
 static uint8_t const matrixFn109[4][3] =
@@ -272,6 +299,10 @@ void onPressed(int8_t row, uint8_t column)
     }
     if (KEY_LEFT_FN <= key && key <= KEY_RIGHT_FN) {
         current[1] |= 1u << (key - KEY_LEFT_FN);
+        return;
+    }
+    if (KEY_FN2 == key) {
+        current[1] |= MOD_FN2;
         return;
     }
     if (count < 8)
@@ -534,13 +565,13 @@ static void about(void)
 #endif
 }
 
-static const uint8_t* getKeyFn(uint8_t code)
+static const uint8_t* getKeyFn(uint8_t code, uint8_t matrixNumber)
 {
     if (is109()) {
         if (12 * 6 + 8 <= code && code <= 12 * 6 + 11)
             return matrixFn109[code - (12 * 6 + 8)];
     }
-    return matrixFn[code / 12][code % 12];
+    return matrixFnZq[matrixNumber][code / 12][code % 12];
 }
 
 #ifdef WITH_HOS
@@ -561,13 +592,18 @@ static int8_t processKeys(const uint8_t* current, uint8_t* processed, uint8_t* r
     if (!memcmp(current, processed, 8))
         return XMIT_NONE;
     memset(report, 0, 8);
+    /*
+     * In the MOD_FN layer, some keys take on special meaning. E.g., KEY_F1
+     * calls about() to rapidly type out some information about the current
+     * keyboard settings.
+     */
     if (current[1] & MOD_FN) {
         uint8_t modifiers = current[0];
         uint8_t count = 2;
         xmit = XMIT_NORMAL;
         for (int8_t i = 2; i < 8 && xmit == XMIT_NORMAL; ++i) {
             uint8_t code = current[i];
-            const uint8_t* a = getKeyFn(code);
+            const uint8_t* a = getKeyFn(code, MOD_FN - 1);
             for (int8_t j = 0; j < 3 && count < 8; ++j) {
                 uint8_t key = a[j];
                 int8_t make = !memchr(processed + 2, code, 6);
@@ -695,6 +731,54 @@ static int8_t processKeys(const uint8_t* current, uint8_t* processed, uint8_t* r
                     }
                     break;
 #endif
+                case KEYPAD_00:
+                    if (make) {
+                        emitKey(KEY_0);
+                        emitKey(KEY_0);
+                        xmit = XMIT_MACRO;
+                    }
+                    break;
+                case KEYPAD_000:
+                    if (make) {
+                        emitKey(KEY_0);
+                        emitKey(KEY_0);
+                        emitKey(KEY_0);
+                        xmit = XMIT_MACRO;
+                    }
+                    break;
+                default:
+                    key = toggleKanaMode(key, current[0], make);
+                    report[count++] = key;
+                    break;
+                }
+            }
+        }
+        report[0] = modifiers;
+    } else if (current[1] & MOD_FN2) {
+        uint8_t modifiers = current[0];
+        uint8_t count = 2;
+        xmit = XMIT_NORMAL;
+        for (int8_t i = 2; i < 8 && xmit != XMIT_MACRO; ++i) {
+            uint8_t code = current[i];
+            const uint8_t* a = getKeyFn(code, MOD_FN2 - 1);
+            for (int8_t j = 0; j < 3 && count < 8; ++j) {
+                uint8_t key = a[j];
+                int8_t make = !memchr(processed + 2, code, 6);
+                switch (key) {
+                case 0:
+                    break;
+                case KEY_LEFTCONTROL:
+                    modifiers |= MOD_LEFTCONTROL;
+                    break;
+                case KEY_RIGHTCONTROL:
+                    modifiers |= MOD_RIGHTCONTROL;
+                    break;
+                case KEY_LEFTSHIFT:
+                    modifiers |= MOD_LEFTSHIFT;
+                    break;
+                case KEY_RIGHTSHIFT:
+                    modifiers |= MOD_RIGHTSHIFT;
+                    break;
                 default:
                     key = toggleKanaMode(key, current[0], make);
                     report[count++] = key;

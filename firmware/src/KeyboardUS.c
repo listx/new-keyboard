@@ -26,6 +26,7 @@ static uint8_t const baseKeys[BASE_MAX + 1][5] =
     {KEY_U, KEY_S, KEY_MINUS, KEY_C, KEY_ENTER},
     {KEY_J, KEY_P, KEY_ENTER},
     {KEY_J, KEY_P, KEY_MINUS, KEY_N, KEY_ENTER},
+    {KEY_U, KEY_S, KEY_MINUS, KEY_Z, KEY_ENTER},
 };
 
 static uint8_t const matrixQwerty[8][12] =
@@ -62,6 +63,18 @@ static uint8_t const matrixColemak[8][12] =
     KEY_A, KEY_R, KEY_S, KEY_T, KEY_D, KEY_ESCAPE, KEY_APPLICATION, KEY_H, KEY_N, KEY_E, KEY_I, KEY_O,
     KEY_Z, KEY_X, KEY_C, KEY_V, KEY_B, KEY_TAB, KEY_ENTER, KEY_K, KEY_M, KEY_COMMA, KEY_PERIOD, KEY_SLASH,
     KEY_LEFTCONTROL, KEY_LEFT_GUI, KEY_LEFT_FN, KEY_LEFTSHIFT, KEY_SPACEBAR, KEY_LEFTALT, KEY_RIGHTALT, KEY_SPACEBAR, KEY_RIGHTSHIFT, KEY_RIGHT_FN, KEY_RIGHT_GUI, KEY_RIGHTCONTROL
+};
+
+static uint8_t const matrixZq[8][12] =
+{
+    KEY_ENTER, KEY_F2, KEY_F3, KEY_F4, KEY_F5, KEY_F6, KEY_F7, KEY_F8, KEY_F9, KEY_F10, KEY_F11, 00,
+    00, KEY_F1, 0, 0, 0, 0, 0, 0, 0, 0, KEY_F12, 00,
+    00, KEY_EQUAL, 0, 0, 0, 0, 0, 0, 0, 0, KEY_ZQ_DOLLAR, 00,
+    KEY_LEFTSHIFT, KEY_ZQ_TILDE, KEY_SLASH, KEY_ZQ_QMARK, KEY_ZQ_AMPERSAND, 0, 0, KEY_GRAVE_ACCENT, KEY_ZQ_UNDERSCORE, KEY_MINUS, KEY_ZQ_EXCLAM, KEY_RIGHTSHIFT,
+    KEY_Z, KEY_R, KEY_D, KEY_F, KEY_PERIOD,     0, 0,                           KEY_ZQ_DOUBLE_QUOTE,    KEY_Y, KEY_U, KEY_P, KEY_Q,
+    KEY_S, KEY_N, KEY_T, KEY_H, KEY_L,          KEY_HOME, KEY_END,              KEY_X,                  KEY_A, KEY_E, KEY_I, KEY_O,
+    KEY_C, KEY_W, KEY_G, KEY_M, KEY_SEMICOLON,  KEY_ZQ_COLON, KEY_ZQ_ASTERISK,  KEY_QUOTE,              KEY_J, KEY_K, KEY_B, KEY_V,
+    KEY_ESCAPE, KEY_LEFT_GUI, KEY_CAPS_LOCK, KEY_SPACEBAR, KEY_ENTER, KEY_LEFTCONTROL, KEY_FN2, KEY_COMMA, KEY_FN, KEY_LEFTALT, KEY_RIGHTALT, KEY_TAB
 };
 
 //
@@ -143,13 +156,60 @@ int8_t processKeysBase(const uint8_t* current, const uint8_t* processed, uint8_t
     uint8_t modifiers = current[0];
     if (!(current[1] & MOD_PAD)) {
         uint8_t count = 2;
+        /* We loop 6 times, presumably because of 6-key rollover. */
         for (int8_t i = 2; i < 8; ++i) {
             uint8_t code = current[i];
             uint8_t key = getKeyNumLock(code);
             if (!key)
                 key = getKeyBase(code);
             key = toggleKanaMode(key, modifiers, !memchr(processed + 2, key, 6));
-            report[count++] = key;
+            /* Process special keys that are private to ZQ layout. */
+            switch (key) {
+            case KEY_ZQ_QMARK:
+            case KEY_ZQ_UNDERSCORE:
+            case KEY_ZQ_ASTERISK:
+            case KEY_ZQ_DOUBLE_QUOTE:
+            case KEY_ZQ_TILDE:
+            case KEY_ZQ_DOLLAR:
+            case KEY_ZQ_AMPERSAND:
+            case KEY_ZQ_EXCLAM:
+            case KEY_ZQ_COLON:
+
+                modifiers |= MOD_LEFTSHIFT;
+                switch (key) {
+                    case KEY_ZQ_QMARK:
+                        report[count++] = KEY_SLASH;
+                        break;
+                    case KEY_ZQ_UNDERSCORE:
+                        report[count++] = KEY_MINUS;
+                        break;
+                    case KEY_ZQ_ASTERISK:
+                        report[count++] = KEY_8;
+                        break;
+                    case KEY_ZQ_DOUBLE_QUOTE:
+                        report[count++] = KEY_QUOTE;
+                        break;
+                    case KEY_ZQ_TILDE:
+                        report[count++] = KEY_GRAVE_ACCENT;
+                        break;
+                    case KEY_ZQ_DOLLAR:
+                        report[count++] = KEY_4;
+                        break;
+                    case KEY_ZQ_AMPERSAND:
+                        report[count++] = KEY_7;
+                        break;
+                    case KEY_ZQ_EXCLAM:
+                        report[count++] = KEY_1;
+                        break;
+                    case KEY_ZQ_COLON:
+                        report[count++] = KEY_SEMICOLON;
+                        break;
+                }
+                break;
+            default:
+                report[count++] = key;
+                break;
+            }
         }
     }
     report[0] = modifiers;
@@ -178,6 +238,9 @@ uint8_t getKeyBase(uint8_t code)
         break;
     case BASE_NICOLA_F:
         key = matrixNicolaF[row][column];
+        break;
+    case BASE_ZQ:
+        key = matrixZq[row][column];
         break;
     default:
         key = matrixQwerty[row][column];
