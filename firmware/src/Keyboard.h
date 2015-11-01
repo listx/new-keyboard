@@ -238,6 +238,22 @@
 #define KEY_RIGHTALT		0xE6
 #define KEY_RIGHT_GUI		0xE7
 
+
+/* Special keys unique to ZQ Layout. */
+#define KEY_ZQ_ASTERISK         0xE9
+#define KEY_ZQ_QMARK            0xEA
+#define KEY_ZQ_UNDERSCORE       0xEB
+#define KEY_ZQ_DOUBLE_QUOTE     0xEC
+#define KEY_ZQ_TILDE            0xED
+#define KEY_ZQ_DOLLAR           0xEE
+#define KEY_ZQ_EXCLAM           0xEF
+// 0xF0 taken (KEY_FN)
+#define KEY_ZQ_AMPERSAND        0xF1
+// 0xF2 taken (KEY_FN2)
+// 0xF3 taken (KEY_DAKUTEN)
+// 0xF4 taken (KEY_HANDAKU)
+#define KEY_ZQ_COLON            0xF5
+
 #define KEY_CALC        	0xFB
 
 /*
@@ -524,10 +540,12 @@ void initKeyboardBase(void);
 void initKeyboardKana(void);
 
 #define KEY_FN          0xF0
+#define KEY_FN2         0xF2
 #define KEY_DAKUTEN     0xF3
 #define KEY_HANDAKU     0xF4
 
 #define MOD_FN          1u
+#define MOD_FN2         2u
 #define MOD_PAD         4u      // Touch sensor
 
 #define BASE_QWERTY     0
@@ -535,7 +553,8 @@ void initKeyboardKana(void);
 #define BASE_COLEMAK    2
 #define BASE_JIS        3
 #define BASE_NICOLA_F   4
-#define BASE_MAX        4
+#define BASE_ZQ         5
+#define BASE_MAX        5
 void emitBaseName(void);
 void switchBase(void);
 
