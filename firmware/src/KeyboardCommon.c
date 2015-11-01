@@ -31,6 +31,13 @@
 #include "nisse.h"
 #endif
 
+/*
+ * FIXME: As of https://github.com/esrille/new-keyboard/issues/8 this line
+ * actually does not work as intended! The LED_DEFAULT only "works" because the
+ * if-condition executes `led = LED_DEFAULT` (hardcoded) in initKeyboardKana().
+ * I.e., even though we do correctly write data to the EEPROM, the way we use it
+ * is broken.
+ */
 __EEPROM_DATA(BASE_ZIPCAR, KANA_ROMAJI, OS_PC, 1 /* delay */, 0 /* mod */, LED_DEFAULT, IME_MS, 0 /* mouse */);
 
 uint8_t os;

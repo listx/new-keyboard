@@ -126,9 +126,8 @@ static uint8_t mode;
 
 void initKeyboardBase(void)
 {
-    mode = eeprom_read(EEPROM_BASE);
-    if (BASE_MAX < mode)
-        mode = 0;
+    /* Workaround for https://github.com/esrille/new-keyboard/issues/8 */
+    mode = BASE_ZIPCAR;
 }
 
 void emitBaseName(void)
