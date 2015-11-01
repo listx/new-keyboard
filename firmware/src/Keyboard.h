@@ -510,8 +510,8 @@ void initKeyboardKana(void);
 #define MOD_FN          1u
 #define MOD_PAD         4u      // Touch sensor
 
-#define BASE_QWERTY     0
-#define BASE_DVORAK     1
+#define BASE_ZIPCAR     0
+#define BASE_QWERTY     1
 #define BASE_COLEMAK    2
 #define BASE_JIS        3
 #define BASE_NICOLA_F   4
