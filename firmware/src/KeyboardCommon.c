@@ -31,7 +31,7 @@
 #include "nisse.h"
 #endif
 
-__EEPROM_DATA(BASE_QWERTY, KANA_ROMAJI, OS_PC, 1 /* delay */, 0 /* mod */, LED_DEFAULT, IME_MS, 0 /* mouse */);
+__EEPROM_DATA(BASE_ZIPCAR, KANA_ROMAJI, OS_PC, 1 /* delay */, 0 /* mod */, LED_DEFAULT, IME_MS, 0 /* mouse */);
 
 uint8_t os;
 uint8_t mod;

@@ -29,6 +29,20 @@ static uint8_t const baseKeys[BASE_MAX + 1][5] =
     {KEY_U, KEY_S, KEY_MINUS, KEY_C, KEY_ENTER},
     {KEY_J, KEY_P, KEY_ENTER},
     {KEY_J, KEY_P, KEY_MINUS, KEY_N, KEY_ENTER},
+    // "us-z" means "zipcar" layout
+    {KEY_U, KEY_S, KEY_MINUS, KEY_Z, KEY_ENTER},
+};
+
+static uint8_t const matrixZipcar[8][12] =
+{
+    KEY_LEFT_GUI, KEY_F2, KEY_F3, KEY_F4, KEY_F5, KEY_F6, KEY_F7, KEY_F8, KEY_F9, KEY_F10, KEY_F11, KEY_DELETE,
+    KEY_INSERT, KEY_F1, 0, 0, 0, 0, 0, 0, 0, 0, KEY_F12, KEY_EQUAL,
+    KEY_Z, KEY_1, 0, 0, 0, 0, 0, 0, 0, 0, KEY_0, KEY_RIGHT_BRACKET,
+    KEY_SEMICOLON, KEY_2, KEY_3, KEY_4, KEY_5, 0, 0, KEY_6, KEY_7, KEY_8, KEY_9, KEY_MINUS,
+    KEY_P, KEY_C, KEY_R, KEY_D, KEY_B, 0, 0, KEY_Q, KEY_Y, KEY_COMMA, KEY_PERIOD, KEY_LEFT_BRACKET,
+    KEY_S, KEY_N, KEY_T, KEY_H, KEY_L, KEY_HOME, KEY_END, KEY_I, KEY_A, KEY_E, KEY_O, KEY_U,
+    KEY_M, KEY_W, KEY_G, KEY_F, KEY_QUOTE, KEY_BACKSLASH, KEY_GRAVE_ACCENT, KEY_SLASH, KEY_J, KEY_K, KEY_X, KEY_V,
+    KEY_LEFTSHIFT, KEY_FN, KEY_CAPS_LOCK, KEY_SPACEBAR, KEY_ENTER, KEY_LEFTCONTROL, KEY_LEFTALT, KEY_TAB, KEY_BACKSPACE, KEY_ESCAPE, KEY_RIGHTALT, KEY_RIGHTSHIFT
 };
 
 static uint8_t const matrixQwerty[8][12] =
@@ -181,6 +195,9 @@ uint8_t getKeyBase(uint8_t code)
         break;
     case BASE_NICOLA_F:
         key = matrixNicolaF[row][column];
+        break;
+    case BASE_ZIPCAR:
+        key = matrixZipcar[row][column];
         break;
     default:
         key = matrixQwerty[row][column];

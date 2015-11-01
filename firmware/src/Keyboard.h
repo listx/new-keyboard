@@ -515,7 +515,8 @@ void initKeyboardKana(void);
 #define BASE_COLEMAK    2
 #define BASE_JIS        3
 #define BASE_NICOLA_F   4
-#define BASE_MAX        4
+#define BASE_ZIPCAR     5
+#define BASE_MAX        5
 void emitBaseName(void);
 void switchBase(void);
 
