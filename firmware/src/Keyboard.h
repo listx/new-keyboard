@@ -246,6 +246,26 @@
 #define KEY_DAKUTEN             0xF3
 #define KEY_HANDAKU             0xF4
 
+/*
+ * MOD key table:
+ *
+ *  1 byte: 11111111
+ *          ||||||||
+ *          |||||||`- (<<0) MOD_LEFTCONTROL
+ *          ||||||`-- (<<1) MOD_LEFTSHIFT
+ *          |||||`--- (<<2) MOD_LEFTALT
+ *          ||||`---- (<<3) MOD_LEFTGUI
+ *          |||`----- (<<4) MOD_RIGHTCONTROL
+ *          ||`------ (<<5) MOD_RIGHTSHIFT
+ *          |`------- (<<6) MOD_RIGHTALT (ALTGR)
+ *          `-------- (<<7) MOD_RIGHTGUI
+ *
+ *  The regular MOD keys above are stored in current[0] and take up a full byte.
+ *  However, the FN and other mod keys are stored in current[1] and there are
+ *  only MOD_FN, MOD_FN2, and MOD_PAD keys currently in use. See KeyboardJP.c
+ *  for how the current[8] array is used.
+ */
+
 #define MOD_LEFTALT             (1u << (KEY_LEFTALT - KEY_LEFTCONTROL))
 #define MOD_RIGHTALT            (1u << (KEY_RIGHTALT - KEY_LEFTCONTROL))
 #define MOD_ALT                 (MOD_LEFTALT | MOD_RIGHTALT)
