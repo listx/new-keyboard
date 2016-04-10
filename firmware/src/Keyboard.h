@@ -679,6 +679,7 @@ int8_t makeReport(uint8_t* report);
 uint8_t processModKey(uint8_t key);
 
 int8_t isKanaMode(const uint8_t* current);
+int8_t isZQMode(const uint8_t* current);
 uint8_t toggleKanaMode(uint8_t key, uint8_t mod, int8_t make);
 
 int8_t processKeysBase(const uint8_t* current, const uint8_t* processed, uint8_t* report);
@@ -686,6 +687,7 @@ int8_t processKeysKana(const uint8_t* current, const uint8_t* processed, uint8_t
 
 uint8_t controlLED(uint8_t report);
 uint8_t controlKanaLED(uint8_t report);
+uint8_t controlZQLED(uint8_t report);
 
 uint8_t getKeyNumLock(uint8_t code);
 uint8_t getKeyBase(uint8_t code);
@@ -709,5 +711,8 @@ void emitNumber(uint16_t n);
 extern uint8_t os;
 extern uint8_t prefix_shift;
 extern uint8_t prefix;
+extern uint8_t prefixExtra;
+extern uint8_t modifiersExtra;
+extern uint8_t lastExtra;
 
 #endif  // KEYBOARD_H

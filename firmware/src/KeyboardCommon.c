@@ -27,6 +27,8 @@ uint8_t os;
 uint8_t mod;
 uint8_t prefix_shift;
 uint8_t prefix;
+uint8_t prefixExtra;
+uint8_t lastExtra;
 
 #define MAX_OS_KEY_NAME     5
 
@@ -181,6 +183,8 @@ static uint8_t processed[8];
 
 static uint8_t modifiers;
 static uint8_t modifiersPrev;
+uint8_t modifiersExtra;
+static uint8_t modifiersExtraPrev;
 static uint8_t current[8];
 static int8_t count;
 static uint8_t rowCount[8];
@@ -201,6 +205,7 @@ void initKeyboard(void)
     memset(processed, 0, 2);
     memset(processed + 2, VOID_KEY, 6);
     modifiers = modifiersPrev = 0;
+    lastExtra = modifiersExtra = modifiersExtraPrev = 0;
     count = 2;
     loadKeyboardSettings();
 }
@@ -297,12 +302,16 @@ void onPressed(int8_t row, uint8_t column)
         modifiers |= 1u << (key - KEY_LEFTCONTROL);
         return;
     }
-    if (KEY_LEFT_FN <= key && key <= KEY_RIGHT_FN) {
-        current[1] |= 1u << (key - KEY_LEFT_FN);
+    if (KEY_FN == key) {
+        modifiersExtra |= MOD_FN;
         return;
     }
     if (KEY_FN2 == key) {
-        current[1] |= MOD_FN2;
+        modifiersExtra |= MOD_FN2;
+        return;
+    }
+    if (KEY_LEFT_FN <= key && key <= KEY_RIGHT_FN) {
+        current[1] |= 1u << (key - KEY_LEFT_FN);
         return;
     }
     if (count < 8)
@@ -592,6 +601,11 @@ static int8_t processKeys(const uint8_t* current, uint8_t* processed, uint8_t* r
     if (!memcmp(current, processed, 8))
         return XMIT_NONE;
     memset(report, 0, 8);
+
+    if (lastExtra & MOD_FN)
+        modifiersExtra |= MOD_FN;
+    if (lastExtra & MOD_FN2)
+        modifiersExtra |= MOD_FN2;
     /*
      * In the MOD_FN layer, some keys take on special meaning. E.g., KEY_F1
      * calls about() to rapidly type out some information about the current
@@ -601,7 +615,8 @@ static int8_t processKeys(const uint8_t* current, uint8_t* processed, uint8_t* r
         uint8_t modifiers = current[0];
         uint8_t count = 2;
         xmit = XMIT_NORMAL;
-        for (int8_t i = 2; i < 8 && xmit == XMIT_NORMAL; ++i) {
+
+        for (int8_t i = 2; i < 8 && xmit != XMIT_MACRO; ++i) {
             uint8_t code = current[i];
             const uint8_t* a = getKeyFn(code, MOD_FN - 1);
             for (int8_t j = 0; j < 3 && count < 8; ++j) {
@@ -988,21 +1003,28 @@ int8_t makeReport(uint8_t* report)
             current[count++] = VOID_KEY;
         memmove(keys[currentKey].keys, current + 2, 6);
         current[0] = modifiers;
-        if (led & LED_SCROLL_LOCK)
-            current[1] |= MOD_LEFTFN;
+//        if (led & LED_SCROLL_LOCK)
+//            current[1] |= MOD_LEFTFN;
+        current[1] = modifiersExtra;
 #ifdef ENABLE_MOUSE
         if (isMouseTouched())
             current[1] |= MOD_PAD;
 #endif
 
-        if (prefix_shift && isKanaMode(current)) {
+        if ((prefix_shift && isKanaMode(current)) || isZQMode(current)) {
             current[0] |= prefix;
+            current[1] |= prefixExtra;
             if (!(modifiersPrev & MOD_LEFTSHIFT) && (modifiers & MOD_LEFTSHIFT))
                 prefix ^= MOD_LEFTSHIFT;
             if (!(modifiersPrev & MOD_RIGHTSHIFT) && (modifiers & MOD_RIGHTSHIFT))
                 prefix ^= MOD_RIGHTSHIFT;
+            if (!(modifiersExtraPrev & MOD_FN) && (modifiersExtra & MOD_FN))
+                prefixExtra ^= MOD_FN;
+            if (!(modifiersExtraPrev & MOD_FN2) && (modifiersExtra & MOD_FN2))
+                prefixExtra ^= MOD_FN2;
         }
         modifiersPrev = modifiers;
+        modifiersExtraPrev = modifiersExtra;
 
         // Copy keys that exist in both keys[prev] and keys[at] for debouncing.
         at = currentKey + DELAY_MAX + 2 - currentDelay;
@@ -1027,8 +1049,10 @@ int8_t makeReport(uint8_t* report)
 
         if (memcmp(current, processed, 8)) {
             if (memcmp(current + 2, processed + 2, 6) || current[2] == VOID_KEY || current[1] || (current[0] & MOD_SHIFT)) {
-                if (current[2] != VOID_KEY)
+                if (current[2] != VOID_KEY) {
                     prefix = 0;
+                    prefixExtra = 0;
+                }
                 xmit = processKeys(current, processed, report);
             } else if (processed[1] && !current[1] ||
                      (processed[0] & MOD_LEFTSHIFT) && !(current[0] & MOD_LEFTSHIFT) ||
@@ -1038,6 +1062,7 @@ int8_t makeReport(uint8_t* report)
             } else
                 xmit = processKeys(current, processed, report);
         }
+
         processOSMode(report);
     } else {
         prev = currentKey + DELAY_MAX + 1;
@@ -1050,7 +1075,7 @@ int8_t makeReport(uint8_t* report)
         currentKey = 0;
     count = 2;
     modifiers = 0;
-    current[1] = 0;
+    modifiersExtra = 0;
 
     return xmit;
 }
@@ -1059,6 +1084,7 @@ uint8_t controlLED(uint8_t report)
 {
     led = report;
     report = controlKanaLED(report);
+    report = controlZQLED(report);
 #ifdef ENABLE_MOUSE
     if (isMouseTouched())
         report |= LED_SCROLL_LOCK;
