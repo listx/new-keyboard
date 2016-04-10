@@ -533,12 +533,6 @@ static int8_t processKana(const uint8_t* current, const uint8_t* processed, uint
     const uint8_t* dakuon;
     int8_t xmit = XMIT_NORMAL;
 
-    /*
-     * First check all non-Shift key modifiers, and save it into modifiers. The
-     * shift key can be handled differently based on left or right shift, and it
-     * can also be "sticky" (JIS X6004) where the shift case can be selected by
-     * pressing and releasing a shift key alone before pressing the next key.
-     */
     modifiers = current[0] & ~MOD_SHIFT;
     report[0] = modifiers;
     for (int8_t i = 2; i < 8 && count < 8; ++i) {

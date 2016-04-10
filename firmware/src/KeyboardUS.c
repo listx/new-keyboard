@@ -122,6 +122,7 @@ static uint8_t const matrixNicolaF[8][12] =
 };
 
 static uint8_t mode;
+static uint8_t lastShift;
 
 void initKeyboardBase(void)
 {
@@ -156,7 +157,30 @@ int8_t isJP(void)
 
 int8_t processKeysBase(const uint8_t* current, const uint8_t* processed, uint8_t* report)
 {
-    uint8_t modifiers = current[0];
+    uint8_t modifiers;
+
+    /*
+     * current[0] can hold the GUI (Super), CTRL, ALT, and SHIFT modifiers.
+     * current[1] can hold the MOUSE, FN, and FN2 modifiers.
+     *
+     * We steal the concept of "sticky" shift keys from the JIS X6004 layout
+     * where the shift case can be selected by pressing and releasing a shift
+     * key alone before pressing the next key, AKA prefix-shift layout.
+     *
+     * In our case, we have 3 sticky modifers: SHIFT, FN, and FN2. SHIFT is
+     * unique in that it can be generated from 2 unique keys, either the left or
+     * right SHIFT key. Otherwise the Sticky behavior of the 3 modifiers listed
+     * above are treated the same way with the use of *lastShift* and *lastExtra*.
+     * Normally we would have a single byte to store the SHIFT/FN/FN2 modifer
+     * info (as we only need 3 bits in our use case --- one for each modifier),
+     * but because FN2 is defined as 2, it overlaps with the LEFTSHIFT key.
+     */
+
+
+    /* We check all non-Shift key modifiers, and save it into *modifiers*. */
+    modifiers = current[0] & ~MOD_SHIFT;
+    report[0] = modifiers;
+
     if (!(current[1] & MOD_PAD)) {
         uint8_t count = 2;
         /* We loop 6 times, presumably because of 6-key rollover. */
@@ -166,6 +190,7 @@ int8_t processKeysBase(const uint8_t* current, const uint8_t* processed, uint8_t
             if (!key)
                 key = getKeyBase(code);
             key = toggleKanaMode(key, modifiers, !memchr(processed + 2, key, 6));
+
             /* Process special keys that are private to ZQ layout. */
             switch (key) {
             case KEY_ZQ_QMARK:
@@ -210,13 +235,46 @@ int8_t processKeysBase(const uint8_t* current, const uint8_t* processed, uint8_t
                 }
                 break;
             default:
+                /* Take into consideration the lastShift and lastExtra keys, if
+                 * they are set. */
+                if (lastShift & MOD_SHIFT)
+                    /*
+                     * We do not use MOD_SHIFT, because by convention (as with
+                     * the ZQ keys above) we always use MOD_LEFTSHIFT to mean
+                     * "SHIFT". There is no need to set both the LEFTSHIFT and
+                     * RIGHTSHIFT bits anyway. We prefer minimal behavior.
+                     */
+                    modifiers |= MOD_LEFTSHIFT;
+
                 report[count++] = key;
                 break;
             }
         }
     }
     report[0] = modifiers;
+    lastShift = current[0];
+    lastExtra = modifiersExtra;
     return XMIT_NORMAL;
+}
+
+uint8_t controlZQLED(uint8_t report)
+{
+    if (mode == BASE_ZQ) {
+        if (prefix & MOD_SHIFT)
+            report |= LED_SCROLL_LOCK;
+        if (prefixExtra & MOD_FN)
+            report |= LED_CAPS_LOCK;
+        if (prefixExtra & MOD_FN2)
+            report |= LED_NUM_LOCK;
+
+    }
+    return report;
+}
+
+
+int8_t isZQMode(const uint8_t* current)
+{
+    return !(current[0] & (MOD_ALT | MOD_CONTROL | MOD_GUI)) && !(current[1] & MOD_PAD) && mode == BASE_ZQ;
 }
 
 uint8_t getKeyBase(uint8_t code)
