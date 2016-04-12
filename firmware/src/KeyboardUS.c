@@ -234,7 +234,7 @@ int8_t processKeysBase(const uint8_t* current, const uint8_t* processed, uint8_t
             default:
                 /* Take into consideration the lastShift and lastExtra keys, if
                  * they are set. */
-                if (lastShift & MOD_SHIFT)
+                if (lastShift & MOD_SHIFT) {
                     /*
                      * We do not use MOD_SHIFT, because by convention (as with
                      * the ZQ keys above) we always use MOD_LEFTSHIFT to mean
@@ -242,14 +242,29 @@ int8_t processKeysBase(const uint8_t* current, const uint8_t* processed, uint8_t
                      * RIGHTSHIFT bits anyway. We prefer minimal behavior.
                      */
                     modifiers |= MOD_LEFTSHIFT;
-
-                report[count++] = key;
+                    report[count++] = key;
+                    /* NOTE: The following discussion is only an educated guess.
+                     *
+                     * If we are typing, they keys 'SHIFT, T, H' in rapid
+                     * sequence, then we don't want the H to be capitalized like
+                     * the T. We catch this case with a memcmp, which returns 0
+                     * if there is no change between the previous ("processed")
+                     * and "current" bytes. If there is a change in the bytes
+                     * (going from 'T' to 'H'), then exit the loop and make 'H'
+                     * become processed on its own in the next "report". */
+                    if (memcmp(current, processed, 8)) {
+                        goto exit_loop;
+                    }
+                } else {
+                    report[count++] = key;
+                }
                 break;
             }
         }
     }
-    report[0] = modifiers;
+exit_loop:
     lastShift = current[0];
+    report[0] = modifiers;
     lastExtra = modifiersExtra;
     return XMIT_NORMAL;
 }
