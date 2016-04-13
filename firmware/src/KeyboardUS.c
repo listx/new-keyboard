@@ -152,6 +152,19 @@ int8_t isJP(void)
     return mode == BASE_JIS || mode == BASE_NICOLA_F;
 }
 
+int8_t pressed(const uint8_t* current, const uint8_t* processed, uint8_t modifiers, uint8_t k)
+{
+    for (int8_t i = 2; i < 8; ++i) {
+        uint8_t code = current[i];
+        uint8_t key = getKeyNumLock(code);
+        if (!key)
+            key = getKeyBase(code);
+        key = toggleKanaMode(key, modifiers, !memchr(processed + 2, key, 6));
+        if (k == key)
+            return 1;
+    }
+    return 0;
+}
 int8_t processKeysBase(const uint8_t* current, const uint8_t* processed, uint8_t* report)
 {
     uint8_t modifiers;
@@ -234,7 +247,7 @@ int8_t processKeysBase(const uint8_t* current, const uint8_t* processed, uint8_t
             default:
                 /* Take into consideration the lastShift and lastExtra keys, if
                  * they are set. */
-                if (lastShift & MOD_SHIFT) {
+                if ((lastShift | current[0]) & MOD_SHIFT) {
                     /*
                      * We do not use MOD_SHIFT, because by convention (as with
                      * the ZQ keys above) we always use MOD_LEFTSHIFT to mean
@@ -245,14 +258,25 @@ int8_t processKeysBase(const uint8_t* current, const uint8_t* processed, uint8_t
                     report[count++] = key;
                     /* NOTE: The following discussion is only an educated guess.
                      *
-                     * If we are typing, they keys 'SHIFT, T, H' in rapid
+                     * If we are typing the keys 'SHIFT, T, H' in rapid
                      * sequence, then we don't want the H to be capitalized like
                      * the T. We catch this case with a memcmp, which returns 0
                      * if there is no change between the previous ("processed")
                      * and "current" bytes. If there is a change in the bytes
                      * (going from 'T' to 'H'), then exit the loop and make 'H'
-                     * become processed on its own in the next "report". */
-                    if (memcmp(current, processed, 8)) {
+                     * become processed on its own in the next "report".
+                     *
+                     * The call to pressed() is necessary to prevent the
+                     * capslock key (remapped to Hyper key with xmodmap) from
+                     * triggering the memcmp() boolean; the capslock key should
+                     * be treated as a modifier key that does not count as being
+                     * "pressed" in the usual sense. Without this, we are unable
+                     * to press SHIFT+CAPS_LOCK as part of one keypress
+                     * ("report").
+                     */
+                    if (memcmp(current, processed, 8)
+                        && !pressed(current, processed, modifiers, KEY_CAPS_LOCK)) {
+                        lastShift = 0;
                         goto exit_loop;
                     }
                 } else {
@@ -262,8 +286,8 @@ int8_t processKeysBase(const uint8_t* current, const uint8_t* processed, uint8_t
             }
         }
     }
-exit_loop:
     lastShift = current[0];
+exit_loop:
     report[0] = modifiers;
     lastExtra = modifiersExtra;
     return XMIT_NORMAL;
