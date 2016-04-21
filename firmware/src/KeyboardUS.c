@@ -21,12 +21,8 @@
 
 static uint8_t const baseKeys[BASE_MAX + 1][5] =
 {
-    {KEY_U, KEY_S, KEY_ENTER},
-    {KEY_U, KEY_S, KEY_MINUS, KEY_D, KEY_ENTER},
-    {KEY_U, KEY_S, KEY_MINUS, KEY_C, KEY_ENTER},
-    {KEY_J, KEY_P, KEY_ENTER},
-    {KEY_J, KEY_P, KEY_MINUS, KEY_N, KEY_ENTER},
     {KEY_U, KEY_S, KEY_MINUS, KEY_Z, KEY_ENTER},
+    {KEY_U, KEY_S, KEY_MINUS, KEY_K, KEY_ENTER},
 };
 
 /* Modified Dubeolsik layout (US-K).

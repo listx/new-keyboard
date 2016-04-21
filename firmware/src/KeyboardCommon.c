@@ -36,12 +36,6 @@ static uint8_t const osKeys[OS_MAX + 1][MAX_OS_KEY_NAME] =
 {
     {KEY_P, KEY_C, KEY_ENTER},
     {KEY_M, KEY_A, KEY_C, KEY_ENTER},
-    {KEY_1, KEY_0, KEY_4, KEY_A, KEY_ENTER},
-    {KEY_1, KEY_0, KEY_4, KEY_B, KEY_ENTER},
-    {KEY_1, KEY_0, KEY_9, KEY_A, KEY_ENTER},
-    {KEY_1, KEY_0, KEY_9, KEY_B, KEY_ENTER},
-    {KEY_A, KEY_MINUS, KEY_S, KEY_P, KEY_ENTER},
-    {KEY_S, KEY_MINUS, KEY_S, KEY_P, KEY_ENTER},
 };
 
 #define MAX_MOD_KEY_NAME    6

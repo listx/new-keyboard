@@ -26,12 +26,7 @@
 
 static uint8_t const kanaKeys[KANA_MAX + 1][MAX_KANA_KEY_NAME] =
 {
-    {KEY_R, KEY_O, KEY_M, KEY_A, KEY_ENTER},
-    {KEY_N, KEY_I, KEY_C, KEY_O, KEY_ENTER},
-    {KEY_M, KEY_T, KEY_Y, KEY_P, KEY_E, KEY_ENTER},
     {KEY_T, KEY_R, KEY_O, KEY_N, KEY_ENTER},
-    {KEY_S, KEY_T, KEY_I, KEY_C, KEY_K, KEY_ENTER},
-    {KEY_X, KEY_6, KEY_0, KEY_0, KEY_4, KEY_ENTER},
 };
 
 #define MAX_LED_KEY_NAME    4

@@ -567,26 +567,26 @@ void loadKanaSettings(void);
 #define MOD_FN2         2u
 #define MOD_PAD         4u      // Touch sensor
 
-#define BASE_QWERTY     0
-#define BASE_DVORAK     1
+#define BASE_ZQ         0
+#define BASE_QWERTY     1
+#define BASE_DVORAK     5
 #define BASE_COLEMAK    2
 #define BASE_JIS        3
 #define BASE_NICOLA_F   4
-#define BASE_ZQ         5
-#define BASE_MAX        5
+#define BASE_MAX        1
 void emitBaseName(void);
 void switchBase(void);
 
 int8_t isDigit(uint8_t code);
 int8_t isJP(void);
 
-#define KANA_ROMAJI     0
+#define KANA_TRON       0
 #define KANA_NICOLA     1
 #define KANA_MTYPE      2
-#define KANA_TRON       3
+#define KANA_ROMAJI     3
 #define KANA_STICKNEY   4
 #define KANA_X6004      5
-#define KANA_MAX        5
+#define KANA_MAX        0
 void emitKanaName(void);
 void switchKana(void);
 
@@ -598,7 +598,7 @@ void switchKana(void);
 #define OS_109B         5   // `
 #define OS_ALT_SP       6   // Alt-Space
 #define OS_SHIFT_SP     7   // Shift-Space
-#define OS_MAX          7
+#define OS_MAX          1
 void emitOSName(void);
 void switchOS(void);
 
