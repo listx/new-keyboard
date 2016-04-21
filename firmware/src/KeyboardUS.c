@@ -141,7 +141,7 @@ void switchBase(void)
     if (BASE_MAX < mode)
         mode = 0;
     WriteNvram(EEPROM_BASE, mode);
-    emitBaseName();
+//    emitBaseName();
 }
 
 int8_t isDigit(uint8_t code)
@@ -297,7 +297,7 @@ exit_loop:
 
 uint8_t controlZQLED(uint8_t report)
 {
-    if (mode == BASE_ZQ) {
+    if (mode == BASE_ZQ || mode == BASE_QWERTY) {
         if (prefix & MOD_SHIFT)
             report |= LED_SCROLL_LOCK;
         if (prefixExtra & MOD_FN)
@@ -312,7 +312,7 @@ uint8_t controlZQLED(uint8_t report)
 
 int8_t isZQMode(const uint8_t* current)
 {
-    return !(current[0] & (MOD_ALT | MOD_CONTROL | MOD_GUI)) && !(current[1] & MOD_PAD) && mode == BASE_ZQ;
+    return !(current[0] & (MOD_ALT | MOD_CONTROL | MOD_GUI)) && !(current[1] & MOD_PAD) && (mode == BASE_ZQ || mode == BASE_QWERTY);
 }
 
 uint8_t getKeyBase(uint8_t code)
