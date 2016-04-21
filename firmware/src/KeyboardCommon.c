@@ -92,7 +92,7 @@ static uint8_t const matrixFnZq[2][8][12][3] =
     /* KEY_FN */
     {
     {{00}, {KEY_F2}, {KEY_F3}, {KEY_F4}, {KEY_F5}, {KEY_F6}, {KEY_F7}, {KEY_F8}, {KEY_F9}, {KEY_MUTE}, {KEY_VOLUME_DOWN}, {00}},
-    {{KEY_RIGHT_BRACKET}, {KEY_F1}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {KEY_VOLUME_UP}, {KEY_F14}},
+    {{KEY_RIGHT_BRACKET}, {KEY_F1}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {KEY_VOLUME_UP}, {KEY_LANG2}},
     {{KEY_LEFTCONTROL, KEY_LEFTSHIFT, KEY_Z}, {00}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {00}, {KEY_PRINTSCREEN}},
     {{00}, {00}, {KEY_LEFTSHIFT, KEY_INSERT}, {00}, {00}, {0}, {0}, {00}, {00}, {KEY_LEFT_GUI, KEY_X}, {00}, {KEY_RIGHTSHIFT}},
     {{KEYPAD_000}, {KEY_7}, {KEY_8}, {KEY_9}, {00}, {0}, {0}, {KEY_LEFTSHIFT, KEY_5}, {KEY_LEFT_BRACKET}, {KEY_BACKSLASH}, {KEY_LEFTSHIFT, KEY_BACKSLASH}, {KEY_RIGHT_BRACKET}},
