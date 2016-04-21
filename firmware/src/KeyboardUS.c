@@ -68,7 +68,7 @@ static uint8_t const matrixColemak[8][12] =
 static uint8_t const matrixZq[8][12] =
 {
     KEY_ENTER, KEY_F2, KEY_F3, KEY_F4, KEY_F5, KEY_F6, KEY_F7, KEY_F8, KEY_F9, KEY_F10, KEY_F11, 00,
-    00, KEY_F1, 0, 0, 0, 0, 0, 0, 0, 0, KEY_F12, 00,
+    00, KEY_F1, 0, 0, 0, 0, 0, 0, 0, 0, KEY_F12, KEY_F13,
     00, KEY_EQUAL, 0, 0, 0, 0, 0, 0, 0, 0, KEY_ZQ_DOLLAR, 00,
     KEY_LEFTSHIFT, KEY_ZQ_TILDE, KEY_SLASH, KEY_ZQ_QMARK, KEY_ZQ_AMPERSAND, 0, 0, KEY_GRAVE_ACCENT, KEY_ZQ_UNDERSCORE, KEY_MINUS, KEY_ZQ_EXCLAM, KEY_RIGHTSHIFT,
     KEY_Q, KEY_J, KEY_K, KEY_P, KEY_Z,                              0, 0,                           KEY_V,      KEY_F, KEY_C, KEY_R, KEY_W,
