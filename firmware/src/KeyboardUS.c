@@ -29,6 +29,12 @@ static uint8_t const baseKeys[BASE_MAX + 1][5] =
     {KEY_U, KEY_S, KEY_MINUS, KEY_Z, KEY_ENTER},
 };
 
+/* Modified Dubeolsik layout (US-K).
+ * This layout is meant specifically to be used for a software IME Dubeolsik
+ * layer. The basik Dubeolsik system has been modified for a nice complement to
+ * the ZQ layout. Also, the most common consonants and vowels have been placed
+ * on the home row, etc.
+ */
 static uint8_t const matrixQwerty[8][12] =
 {
     KEY_LEFT_BRACKET, KEY_F2, KEY_F3, KEY_F4, KEY_F5, KEY_F6, KEY_F7, KEY_F8, KEY_F9, KEY_F10, KEY_F11, KEY_EQUAL,
