@@ -216,6 +216,7 @@ int8_t processKeysBase(const uint8_t* current, const uint8_t* processed, uint8_t
             case KEY_ZQ_COLON:
 
                 modifiers |= MOD_LEFTSHIFT;
+                i = 8;
                 switch (key) {
                     case KEY_ZQ_QMARK:
                         report[count++] = KEY_SLASH;
@@ -245,6 +246,21 @@ int8_t processKeysBase(const uint8_t* current, const uint8_t* processed, uint8_t
                         report[count++] = KEY_SEMICOLON;
                         break;
                 }
+                break;
+            case KEY_GRAVE_ACCENT:
+            case KEY_MINUS:
+            case KEY_EQUAL:
+            case KEY_LEFT_BRACKET:
+            case KEY_RIGHT_BRACKET:
+            case KEY_BACKSLASH:
+            case KEY_SEMICOLON:
+            case KEY_QUOTE:
+            case KEY_COMMA:
+            case KEY_PERIOD:
+            case KEY_SLASH:
+                report[count++] = key;
+                if (mode == BASE_ZQ || mode == BASE_QWERTY)
+                    i = 8;
                 break;
             default:
                 /* Take into consideration the lastShift and lastExtra keys, if
