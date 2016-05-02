@@ -73,9 +73,9 @@ static uint8_t const matrixZq[8][12] =
     00, KEY_F1, 0, 0, 0, 0, 0, 0, 0, 0, KEY_F12, 00,
     00, KEY_EQUAL, 0, 0, 0, 0, 0, 0, 0, 0, KEY_ZQ_DOLLAR, 00,
     KEY_SEMICOLON, KEY_ZQ_TILDE, KEY_SLASH, KEY_ZQ_AMPERSAND, 00, 0, 0, 00, KEY_GRAVE_ACCENT, KEY_ZQ_EXCLAM, KEY_ZQ_QMARK, KEY_TAB,
-    00,     KEY_J, KEY_K, KEY_U, KEY_Z,                     0, 0,                           KEY_M, KEY_D, KEY_L, KEY_R, 00,
-    KEY_I,  KEY_A, KEY_O, KEY_E, KEY_P,                     KEY_HOME, KEY_END,              KEY_F, KEY_H, KEY_T, KEY_N, KEY_S,
-    KEY_Y,  KEY_X, KEY_V, KEY_ZQ_DOUBLE_QUOTE, KEY_QUOTE,   KEY_ZQ_COLON, KEY_ZQ_ASTERISK,  KEY_Q, KEY_B, KEY_G, KEY_C, KEY_W,
+    00,     KEY_Y, KEY_U, KEY_Q, KEY_Z,                     0, 0,                           KEY_B, KEY_F, KEY_L, KEY_R, 00,
+    KEY_A,  KEY_I, KEY_E, KEY_O, KEY_X,                     KEY_HOME, KEY_END,              KEY_D, KEY_H, KEY_T, KEY_N, KEY_S,
+    KEY_J,  KEY_P, KEY_K, KEY_ZQ_DOUBLE_QUOTE, KEY_QUOTE,   KEY_ZQ_COLON, KEY_ZQ_ASTERISK,  KEY_V, KEY_M, KEY_G, KEY_W, KEY_C,
     KEY_LEFTSHIFT, KEY_LEFT_GUI, KEY_CAPS_LOCK, KEY_SPACEBAR, KEY_ESCAPE, KEY_LEFTCONTROL, KEY_FN2, KEY_COMMA, KEY_FN, KEY_LEFTALT, KEY_RIGHTALT, KEY_RIGHTSHIFT
 };
 
