@@ -70,13 +70,13 @@ static uint8_t const matrixColemak[8][12] =
 static uint8_t const matrixZq[8][12] =
 {
     00, KEY_F2, KEY_F3, KEY_F4, KEY_F5, KEY_F6, KEY_F7, KEY_F8, KEY_F9, KEY_F10, KEY_F11, 00,
-    00, KEY_F1, 0, 0, 0, 0, 0, 0, 0, 0, KEY_F12, 00,
+    KEY_ESCAPE, KEY_F1, 0, 0, 0, 0, 0, 0, 0, 0, KEY_F12, KEY_TAB,
     00, KEY_EQUAL, 0, 0, 0, 0, 0, 0, 0, 0, KEY_ZQ_DOLLAR, 00,
-    KEY_ZQ_COLON, KEY_ZQ_TILDE, KEY_SLASH, KEY_ZQ_AMPERSAND, 00, 0, 0, 00, KEY_GRAVE_ACCENT, KEY_ZQ_EXCLAM, KEY_ZQ_QMARK, KEY_SEMICOLON,
-    00,     KEY_Y, KEY_U, KEY_Q, KEY_Z,                     0, 0,               KEY_B, KEY_F, KEY_L, KEY_R, 00,
-    KEY_A,  KEY_I, KEY_E, KEY_O, KEY_X,                     KEY_ESCAPE, KEY_DELETE,  KEY_D, KEY_H, KEY_T, KEY_N, KEY_S,
-    KEY_J,  KEY_P, KEY_K, KEY_ZQ_DOUBLE_QUOTE, KEY_QUOTE,   KEY_ENTER, KEY_TAB, KEY_V, KEY_M, KEY_G, KEY_W, KEY_C,
-    KEY_LEFTSHIFT, KEY_PAGEDOWN, KEY_LEFT_GUI, KEY_SPACEBAR, KEY_CAPS_LOCK, KEY_LEFTCONTROL, KEY_FN2, KEY_COMMA, KEY_FN, KEY_LEFTALT, KEY_RIGHTALT, KEY_RIGHTSHIFT
+    KEY_ZQ_COLON, KEY_ZQ_TILDE, KEY_SLASH, 00, 00, 0, 0, 00, 00, KEY_ZQ_EXCLAM, KEY_ZQ_QMARK, KEY_SEMICOLON,
+    00,     KEY_Y, KEY_O, KEY_F, KEY_K,                     0, 0,                       KEY_V, KEY_M, KEY_D, KEY_L, 00,
+    KEY_A,  KEY_I, KEY_E, KEY_U, KEY_W,                     KEY_PAGEUP, KEY_PAGEDOWN,   KEY_P, KEY_H, KEY_T, KEY_N, KEY_R,
+    KEY_J,  KEY_X, KEY_Q, KEY_ZQ_DOUBLE_QUOTE, KEY_QUOTE,   KEY_DELETE, KEY_ENTER,      KEY_Z, KEY_B, KEY_G, KEY_C, KEY_S,
+    KEY_LEFTSHIFT, KEY_INSERT, KEY_LEFT_GUI, KEY_SPACEBAR, KEY_CAPS_LOCK, KEY_LEFTCONTROL, KEY_FN2, KEY_COMMA, KEY_FN, KEY_LEFTALT, KEY_RIGHTALT, KEY_RIGHTSHIFT
 };
 
 //
@@ -209,7 +209,6 @@ int8_t processKeysBase(const uint8_t* current, const uint8_t* processed, uint8_t
             case KEY_ZQ_DOUBLE_QUOTE:
             case KEY_ZQ_TILDE:
             case KEY_ZQ_DOLLAR:
-            case KEY_ZQ_AMPERSAND:
             case KEY_ZQ_EXCLAM:
             case KEY_ZQ_COLON:
 
@@ -227,9 +226,6 @@ int8_t processKeysBase(const uint8_t* current, const uint8_t* processed, uint8_t
                         break;
                     case KEY_ZQ_DOLLAR:
                         report[count++] = KEY_4;
-                        break;
-                    case KEY_ZQ_AMPERSAND:
-                        report[count++] = KEY_7;
                         break;
                     case KEY_ZQ_EXCLAM:
                         report[count++] = KEY_1;
