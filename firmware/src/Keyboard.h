@@ -559,10 +559,7 @@ void loadKeyboardSettings(void);
 void loadBaseSettings(void);
 void loadKanaSettings(void);
 
-#define KEY_FN          0xF0
 #define KEY_FN2         0xF2
-#define KEY_DAKUTEN     0xF3
-#define KEY_HANDAKU     0xF4
 
 #define MOD_FN          1u
 #define MOD_FN2         2u
