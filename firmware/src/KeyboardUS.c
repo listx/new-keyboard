@@ -73,7 +73,7 @@ static uint8_t const matrixZq[8][12] =
     00, KEY_F1, 0, 0, 0, 0, 0, 0, 0, 0, KEY_F12, 00,
     00, KEY_ZQ_EXCLAM, 0, 0, 0, 0, 0, 0, 0, 0, KEY_ZQ_DOLLAR, 00,
     KEY_TAB, KEY_ZQ_HASH, KEY_ZQ_ASTERISK, 00 , 00, 0, 0, 00, 00, KEY_SLASH, KEY_ZQ_TILDE, KEY_ENTER,
-    KEY_SEMICOLON, KEY_Y, KEY_O, KEY_C, KEY_V,                    0, 0,                       KEY_F, KEY_D, KEY_T, KEY_R, KEY_PERIOD,
+    KEY_SEMICOLON, KEY_Y, KEY_O, KEY_C, KEY_V,                    0, 0,                       KEY_F, KEY_D, KEY_T, KEY_R, KEY_ZQ_UNDERSCORE,
     KEY_A,         KEY_I, KEY_E, KEY_U, KEY_W,                    KEY_PAGEUP, KEY_PAGEDOWN,   KEY_H, KEY_J, KEY_K, KEY_L, KEY_N,
     KEY_Z,         KEY_X, KEY_Q, KEY_QUOTE, KEY_ZQ_DOUBLE_QUOTE,  KEY_DELETE, KEY_ESCAPE,     KEY_B, KEY_M, KEY_G, KEY_P, KEY_S,
     KEY_LEFTSHIFT, KEY_INSERT, KEY_LEFT_GUI, KEY_SPACEBAR, KEY_CAPS_LOCK, KEY_LEFTCONTROL, KEY_FN2, KEY_COMMA, KEY_FN, KEY_LEFTALT, KEY_RIGHTALT, KEY_RIGHTSHIFT
@@ -214,6 +214,7 @@ int8_t processKeysBase(const uint8_t* current, const uint8_t* processed, uint8_t
             case KEY_ZQ_COLON:
             case KEY_ZQ_ASTERISK:
             case KEY_ZQ_HASH:
+            case KEY_ZQ_UNDERSCORE:
 
                 modifiers |= MOD_LEFTSHIFT;
                 i = 8;
@@ -226,6 +227,7 @@ int8_t processKeysBase(const uint8_t* current, const uint8_t* processed, uint8_t
                     case KEY_ZQ_COLON:          key_zq = KEY_SEMICOLON; break;
                     case KEY_ZQ_ASTERISK:       key_zq = KEY_8; break;
                     case KEY_ZQ_HASH:           key_zq = KEY_3; break;
+                    case KEY_ZQ_UNDERSCORE:     key_zq = KEY_MINUS; break;
                 }
                 report[count++] = key_zq;
                 break;
