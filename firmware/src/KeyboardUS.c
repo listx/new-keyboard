@@ -70,12 +70,12 @@ static uint8_t const matrixColemak[8][12] =
 static uint8_t const matrixZq[8][12] =
 {
     00, KEY_F2, KEY_F3, KEY_F4, KEY_F5, KEY_F6, KEY_F7, KEY_F8, KEY_F9, KEY_F10, KEY_F11, 00,
-    KEY_ESCAPE, KEY_F1, 0, 0, 0, 0, 0, 0, 0, 0, KEY_F12, KEY_TAB,
-    00, KEY_EQUAL, 0, 0, 0, 0, 0, 0, 0, 0, KEY_ZQ_DOLLAR, 00,
-    KEY_ZQ_COLON, KEY_ZQ_TILDE, KEY_SLASH, 00, 00, 0, 0, 00, 00, KEY_ZQ_EXCLAM, KEY_ZQ_QMARK, KEY_SEMICOLON,
-    00,     KEY_Y, KEY_O, KEY_G, KEY_P,                     0, 0,                       KEY_V, KEY_F, KEY_K, KEY_R, 00,
-    KEY_A,  KEY_I, KEY_E, KEY_U, KEY_W,                     KEY_PAGEUP, KEY_PAGEDOWN,   KEY_D, KEY_J, KEY_T, KEY_N, KEY_S,
-    KEY_Z,  KEY_X, KEY_Q, KEY_QUOTE, KEY_ZQ_DOUBLE_QUOTE,   KEY_DELETE, KEY_ENTER,      KEY_B, KEY_H, KEY_M, KEY_L, KEY_C,
+    00, KEY_F1, 0, 0, 0, 0, 0, 0, 0, 0, KEY_F12, 00,
+    00, KEY_ZQ_EXCLAM, 0, 0, 0, 0, 0, 0, 0, 0, KEY_ZQ_DOLLAR, 00,
+    KEY_TAB, KEY_ZQ_HASH, KEY_ZQ_ASTERISK, 00 , 00, 0, 0, 00, 00, KEY_SLASH, KEY_ZQ_TILDE, KEY_ENTER,
+    KEY_SEMICOLON, KEY_Y, KEY_O, KEY_C, KEY_V,                    0, 0,                       KEY_F, KEY_D, KEY_T, KEY_N, KEY_PERIOD,
+    KEY_A,         KEY_I, KEY_E, KEY_U, KEY_W,                    KEY_PAGEUP, KEY_PAGEDOWN,   KEY_H, KEY_J, KEY_K, KEY_L, KEY_S,
+    KEY_Z,         KEY_X, KEY_Q, KEY_QUOTE, KEY_ZQ_DOUBLE_QUOTE,  KEY_DELETE, KEY_ESCAPE,     KEY_B, KEY_M, KEY_G, KEY_P, KEY_R,
     KEY_LEFTSHIFT, KEY_INSERT, KEY_LEFT_GUI, KEY_SPACEBAR, KEY_CAPS_LOCK, KEY_LEFTCONTROL, KEY_FN2, KEY_COMMA, KEY_FN, KEY_LEFTALT, KEY_RIGHTALT, KEY_RIGHTSHIFT
 };
 
@@ -195,6 +195,7 @@ int8_t processKeysBase(const uint8_t* current, const uint8_t* processed, uint8_t
 
     if (!(current[1] & MOD_PAD)) {
         uint8_t count = 2;
+        uint8_t key_zq;
         /* We loop 6 times, presumably because of 6-key rollover. */
         for (int8_t i = 2; i < 8; ++i) {
             uint8_t code = current[i];
@@ -211,30 +212,31 @@ int8_t processKeysBase(const uint8_t* current, const uint8_t* processed, uint8_t
             case KEY_ZQ_DOLLAR:
             case KEY_ZQ_EXCLAM:
             case KEY_ZQ_COLON:
+            case KEY_ZQ_ASTERISK:
+            case KEY_ZQ_HASH:
 
                 modifiers |= MOD_LEFTSHIFT;
                 i = 8;
                 switch (key) {
-                    case KEY_ZQ_QMARK:
-                        report[count++] = KEY_SLASH;
-                        break;
-                    case KEY_ZQ_DOUBLE_QUOTE:
-                        report[count++] = KEY_QUOTE;
-                        break;
-                    case KEY_ZQ_TILDE:
-                        report[count++] = KEY_GRAVE_ACCENT;
-                        break;
-                    case KEY_ZQ_DOLLAR:
-                        report[count++] = KEY_4;
-                        break;
-                    case KEY_ZQ_EXCLAM:
-                        report[count++] = KEY_1;
-                        break;
-                    case KEY_ZQ_COLON:
-                        report[count++] = KEY_SEMICOLON;
-                        break;
+                    case KEY_ZQ_QMARK:          key_zq = KEY_SLASH; break;
+                    case KEY_ZQ_DOUBLE_QUOTE:   key_zq = KEY_QUOTE; break;
+                    case KEY_ZQ_TILDE:          key_zq = KEY_GRAVE_ACCENT; break;
+                    case KEY_ZQ_DOLLAR:         key_zq = KEY_4; break;
+                    case KEY_ZQ_EXCLAM:         key_zq = KEY_1; break;
+                    case KEY_ZQ_COLON:          key_zq = KEY_SEMICOLON; break;
+                    case KEY_ZQ_ASTERISK:       key_zq = KEY_8; break;
+                    case KEY_ZQ_HASH:           key_zq = KEY_3; break;
                 }
+                report[count++] = key_zq;
                 break;
+            /*
+             * For the keys below, we disable any modifier keys on them if they
+             * are pressed from the regular non-FN layer; this is because
+             * sometimes we press ZQ_TILDE followed by SLASH, but we want to
+             * prevent the fake SHIFT key from ZQ_TILDE from affecting the SLASH
+             * key. But (unfortunately) this also means that these keys are
+             * "unshiftable" from the base layer!
+             */
             case KEY_GRAVE_ACCENT:
             case KEY_MINUS:
             case KEY_EQUAL:
