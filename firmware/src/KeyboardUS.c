@@ -64,13 +64,13 @@ static uint8_t const matrixColemak[8][12] =
 static uint8_t const matrixZq[8][12] =
 {
     00, KEY_F2, KEY_F3, KEY_F4, KEY_F5, KEY_F6, KEY_F7, KEY_F8, KEY_F9, KEY_F10, KEY_F11, 00,
-    00, KEY_F1, 0, 0, 0, 0, 0, 0, 0, 0, KEY_F12, 00,
+    KEY_ESCAPE, KEY_F1, 0, 0, 0, 0, 0, 0, 0, 0, KEY_F12, KEY_GRAVE_ACCENT,
     00, KEY_ZQ_EXCLAM, 0, 0, 0, 0, 0, 0, 0, 0, KEY_ZQ_DOLLAR, 00,
-    KEY_ESCAPE, KEY_ZQ_HASH, KEY_ZQ_ASTERISK, 00 , 00, 0, 0, 00, 00, KEY_SLASH, KEY_ZQ_TILDE, KEY_DELETE,
-    KEY_SEMICOLON, KEY_Y, KEY_O, KEY_P, KEY_V,                    0, 0,                       KEY_M, KEY_F, KEY_T, KEY_R, KEY_ZQ_UNDERSCORE,
+    KEY_SEMICOLON, KEY_ZQ_HASH, KEY_ZQ_ASTERISK, 00 , 00, 0, 0, 00, 00, KEY_SLASH, KEY_ZQ_QMARK, KEY_PERIOD,
+    00,            KEY_Y, KEY_O, KEY_P, KEY_V,                    0, 0,                       KEY_M, KEY_F, KEY_T, KEY_R, 00,
     KEY_A,         KEY_I, KEY_E, KEY_U, KEY_W,                    KEY_PAGEUP, KEY_PAGEDOWN,   KEY_H, KEY_J, KEY_K, KEY_L, KEY_N,
     KEY_Z,         KEY_X, KEY_Q, KEY_QUOTE, KEY_ZQ_DOUBLE_QUOTE,  KEY_TAB, KEY_ENTER,         KEY_B, KEY_D, KEY_G, KEY_C, KEY_S,
-    KEY_LEFTSHIFT, KEY_INSERT, KEY_LEFT_GUI, KEY_SPACEBAR, KEY_CAPS_LOCK, KEY_LEFTCONTROL, KEY_FN2, KEY_COMMA, KEY_RIGHT_FN, KEY_LEFTALT, KEY_RIGHTALT, KEY_RIGHTSHIFT
+    KEY_LEFTSHIFT, KEY_RIGHTALT, KEY_LEFT_GUI, KEY_SPACEBAR, KEY_CAPS_LOCK, KEY_LEFTCONTROL, KEY_FN2, KEY_COMMA, KEY_RIGHT_FN, KEY_LEFTALT, KEY_RIGHTALT, KEY_RIGHTSHIFT
 };
 
 //
@@ -181,7 +181,6 @@ int8_t processKeysBase(const uint8_t* current, const uint8_t* processed, uint8_t
      * info (as we only need 3 bits in our use case --- one for each modifier),
      * but because FN2 is defined as 2, it overlaps with the LEFTSHIFT key.
      */
-
 
     /* We check all non-Shift key modifiers, and save it into *modifiers*. */
     modifiers = current[0] & ~MOD_SHIFT;
@@ -310,7 +309,6 @@ uint8_t controlZQLED(uint8_t report)
     }
     return report;
 }
-
 
 int8_t isZQMode(const uint8_t* current)
 {

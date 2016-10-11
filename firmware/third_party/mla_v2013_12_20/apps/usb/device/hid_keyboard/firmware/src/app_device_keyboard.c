@@ -566,6 +566,10 @@ uint8_t* APP_KeyboardScan(void)
             mod = MOD_LEFTSHIFT;
         }
 #endif
+        if (key == KEY_ZQ_TILDE_MACRO) {
+            key = KEY_GRAVE_ACCENT;
+            mod = MOD_LEFTSHIFT;
+        }
         if (inputReport.keys[0] && inputReport.keys[0] == key)
             inputReport.keys[0] = 0;    // BRK
         else {

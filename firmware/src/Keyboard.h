@@ -254,6 +254,8 @@
 #define KEY_ZQ_COLON            0xF5
 #define KEY_ZQ_AMPERSAND        0xF6
 #define KEY_ZQ_HASH             0xF7
+#define KEY_ZQ_HOMEDIR          0xF8
+#define KEY_ZQ_TILDE_MACRO      0xF9
 
 #define KEY_CALC                0xFB
 

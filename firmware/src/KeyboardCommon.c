@@ -86,13 +86,13 @@ static uint8_t const matrixFnZq[2][8][12][3] =
     /* KEY_FN */
     {
     {{00}, {KEY_F2}, {KEY_F3}, {KEY_F4}, {KEY_F5}, {KEY_F6}, {KEY_F7}, {KEY_F8}, {KEY_F9}, {00}, {00}, {00}},
-    {{KEY_RIGHT_BRACKET}, {KEY_F1}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {00}, {00}},
+    {{00}, {KEY_F1}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {00}, {KEY_DELETE}},
     {{KEY_LEFTCONTROL, KEY_LEFTSHIFT, KEY_Z}, {00}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {KEY_PRINTSCREEN}},
-    {{00}, {00}, {KEY_BACKSPACE}, {00}, {00}, {0}, {0}, {00}, {0}, {00}, {00}, {00}},
-    {{KEY_LEFTSHIFT, KEY_SLASH}, {KEY_7}, {KEY_8}, {KEY_9}, {KEY_EQUAL}, {0}, {0}, {KEY_GRAVE_ACCENT}, {KEY_BACKSLASH}, {KEY_PERIOD}, {KEY_LEFTSHIFT, KEY_SEMICOLON}, {KEY_LEFTSHIFT, KEY_7}},
+    {{KEY_LEFTSHIFT, KEY_7}, {00}, {KEY_LEFTSHIFT, KEY_INSERT}, {00}, {00}, {0}, {0}, {00}, {0}, {KEY_ZQ_HOMEDIR}, {00}, {KEY_PERIOD, KEY_SLASH}},
+    {{00}, {KEY_7}, {KEY_8}, {KEY_9}, {KEY_EQUAL}, {0}, {0}, {KEY_LEFTSHIFT, KEY_GRAVE_ACCENT}, {KEY_BACKSLASH}, {KEY_LEFTSHIFT, KEY_MINUS}, {KEY_LEFTSHIFT, KEY_SEMICOLON}, {00}},
     {{KEY_MINUS}, {KEY_4}, {KEY_5}, {KEY_6}, {KEY_LEFTSHIFT, KEY_EQUAL}, {KEY_HOME}, {KEY_END}, {KEY_BACKSPACE}, {KEY_LEFTSHIFT, KEY_LEFT_BRACKET}, {KEY_LEFTSHIFT, KEY_9}, {KEY_LEFTSHIFT, KEY_0}, {KEY_LEFTSHIFT, KEY_RIGHT_BRACKET}},
     {{KEY_0}, {KEY_1}, {KEY_2}, {KEY_3}, {KEY_LEFTSHIFT, KEY_5}, {KEY_LEFTSHIFT, KEY_6}, {KEY_LEFTSHIFT, KEY_2}, {KEY_LEFTSHIFT, KEY_BACKSLASH}, {KEY_LEFT_BRACKET}, {KEY_LEFTSHIFT, KEY_COMMA}, {KEY_LEFTSHIFT, KEY_PERIOD}, {KEY_RIGHT_BRACKET}},
-    {{KEY_LEFTSHIFT}, {KEY_INSERT}, {KEY_LEFT_GUI}, {KEY_SPACEBAR}, {KEY_CAPS_LOCK}, {KEY_LEFTCONTROL}, {00}, {00}, {KEY_RIGHT_FN}, {KEY_LEFTALT}, {KEY_RIGHTALT}, {KEY_RIGHTSHIFT}}
+    {{KEY_LEFTSHIFT}, {KEY_RIGHTALT}, {KEY_LEFT_GUI}, {KEY_SPACEBAR}, {KEY_CAPS_LOCK}, {KEY_LEFTCONTROL}, {00}, {00}, {KEY_RIGHT_FN}, {KEY_LEFTALT}, {KEY_RIGHTALT}, {KEY_RIGHTSHIFT}}
     },
 
     /* KEY_FN2 */
@@ -104,7 +104,7 @@ static uint8_t const matrixFnZq[2][8][12][3] =
     {{KEY_F12}, {KEY_F7}, {KEY_F8}, {KEY_F9}, {00}, {0}, {0}, {00}, {KEY_VOLUME_UP}, {KEY_MUTE}, {KEY_VOLUME_DOWN}, {00}},
     {{KEY_F11}, {KEY_F4}, {KEY_F5}, {KEY_F6}, {00}, {KEY_PRINTSCREEN}, {KEY_SCROLL_LOCK}, {KEY_LEFTARROW}, {KEY_DOWNARROW}, {KEY_UPARROW}, {KEY_RIGHTARROW}, {00}},
     {{KEY_F10}, {KEY_F1}, {KEY_F2}, {KEY_F3}, {00}, {KEY_PAUSE}, {00}, {00}, {00}, {00}, {00}, {00}},
-    {{00}, {00}, {KEY_LEFT_GUI}, {KEY_BACKSPACE}, {KEY_CAPS_LOCK}, {KEY_LEFTCONTROL}, {00}, {00}, {00}, {KEY_LEFTALT}, {KEY_RIGHTALT}, {00}}
+    {{00}, {KEY_RIGHTALT}, {KEY_LEFT_GUI}, {KEY_BACKSPACE}, {KEY_CAPS_LOCK}, {KEY_LEFTCONTROL}, {00}, {00}, {00}, {KEY_LEFTALT}, {KEY_RIGHTALT}, {00}}
     },
 };
 
@@ -753,6 +753,14 @@ static int8_t processKeys(const uint8_t* current, uint8_t* processed, uint8_t* r
                         emitKey(KEY_0);
                         emitKey(KEY_0);
                         xmit = XMIT_MACRO;
+                    }
+                    break;
+                case KEY_ZQ_HOMEDIR:
+                    if (make) {
+                        emitKey(0);
+                        emitKey(KEY_ZQ_TILDE_MACRO);
+                        emitKey(KEY_SLASH);
+                        xmit = XMIT_IN_ORDER;
                     }
                     break;
                 default:
