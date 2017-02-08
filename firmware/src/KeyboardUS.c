@@ -186,6 +186,8 @@ int8_t processKeysBase(const uint8_t* current, const uint8_t* processed, uint8_t
     modifiers = current[0] & ~MOD_SHIFT;
     report[0] = modifiers;
 
+    uint8_t skip_set_lastShift = 0;
+
     if (!(current[1] & MOD_PAD)) {
         uint8_t count = 2;
         uint8_t key_zq;
@@ -282,6 +284,20 @@ int8_t processKeysBase(const uint8_t* current, const uint8_t* processed, uint8_t
                         lastShift = 0;
                         goto exit_loop;
                     }
+                    /*
+                     * If we are holding down KEY_CAPS_LOCK (Hyper key), then
+                     * disable lastShift (sticky Shift keys). This way, when we
+                     * press, e.g., Hyper+Shift+3 to move a window to workspace
+                     * 3, and then let go of SHIFT+3 (holding down Hyper all
+                     * this time) and then press a J key for window navigation,
+                     * we register Hyper+J, not Hyper+Shift+J. Sticky shift keys
+                     * are just not intuitive when dealing with XMonad window
+                     * navigation bindings.
+                     */
+                    if (pressed(current, processed, modifiers, KEY_CAPS_LOCK)) {
+                        lastShift = 0;
+                        skip_set_lastShift = 1;
+                    }
                 } else {
                     report[count++] = key;
                 }
@@ -289,6 +305,7 @@ int8_t processKeysBase(const uint8_t* current, const uint8_t* processed, uint8_t
             }
         }
     }
+if (!skip_set_lastShift)
     lastShift = current[0];
 exit_loop:
     report[0] = modifiers;
