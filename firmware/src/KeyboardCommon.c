@@ -85,13 +85,13 @@ static uint8_t const matrixFnZq[2][8][12][3] =
 {
     /* KEY_FN */
     {
-    {{00}, {KEY_F2}, {KEY_F3}, {KEY_F4}, {KEY_F5}, {KEY_F6}, {KEY_F7}, {KEY_F8}, {KEY_F9}, {00}, {00}, {00}},
-    {{00}, {KEY_F1}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {00}, {KEY_DELETE}},
-    {{KEY_LEFTCONTROL, KEY_LEFTSHIFT, KEY_Z}, {00}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {KEY_PRINTSCREEN}},
-    {{KEY_LEFTSHIFT, KEY_7}, {00}, {KEY_LEFTSHIFT, KEY_INSERT}, {00}, {00}, {0}, {0}, {00}, {0}, {KEY_ZQ_HOMEDIR}, {00}, {KEY_PERIOD, KEY_SLASH}},
-    {{00}, {KEY_7}, {KEY_8}, {KEY_9}, {KEY_EQUAL}, {0}, {0}, {KEY_LEFTSHIFT, KEY_GRAVE_ACCENT}, {KEY_BACKSLASH}, {KEY_LEFTSHIFT, KEY_MINUS}, {KEY_LEFTSHIFT, KEY_SEMICOLON}, {00}},
-    {{KEY_MINUS}, {KEY_4}, {KEY_5}, {KEY_6}, {KEY_LEFTSHIFT, KEY_EQUAL}, {KEY_END}, {KEY_HOME}, {KEY_BACKSPACE}, {KEY_LEFTSHIFT, KEY_LEFT_BRACKET}, {KEY_LEFTSHIFT, KEY_9}, {KEY_LEFTSHIFT, KEY_0}, {KEY_LEFTSHIFT, KEY_RIGHT_BRACKET}},
-    {{KEY_0}, {KEY_1}, {KEY_2}, {KEY_3}, {KEY_LEFTSHIFT, KEY_5}, {KEY_LEFTSHIFT, KEY_6}, {KEY_LEFTSHIFT, KEY_2}, {KEY_LEFTSHIFT, KEY_BACKSLASH}, {KEY_LEFT_BRACKET}, {KEY_LEFTSHIFT, KEY_COMMA}, {KEY_LEFTSHIFT, KEY_PERIOD}, {KEY_RIGHT_BRACKET}},
+    {{00}, {KEY_F2}, {KEY_F3}, {KEY_F4}, {KEY_F5}, {KEY_F6}, {KEY_F7}, {KEY_F8}, {KEY_F9}, {KEY_F10}, {KEY_F11}, {00}},
+    {{KEY_ESCAPE}, {KEY_F1}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {KEY_F12}, {KEY_DELETE}},
+    {{KEY_LEFTCONTROL, KEY_LEFTSHIFT, KEY_Z}, {KEY_ZQ_HOMEDIR}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {KEY_PRINTSCREEN}},
+    {{KEY_BACKSPACE}, {00}, {KEY_ZQ_SOFTTAB2}, {00}, {00}, {0}, {0}, {00}, {0}, {KEY_ENTER}, {00}, {KEY_BACKSPACE}},
+    {{00}, {KEY_7}, {KEY_8}, {KEY_9}, {00}, {0}, {0}, {00}, {KEY_BACKSLASH}, {KEY_LEFTSHIFT, KEY_MINUS}, {KEY_EQUAL}, {00}},
+    {{KEY_0}, {KEY_4}, {KEY_5}, {KEY_6}, {KEY_LEFTSHIFT, KEY_SLASH}, {00}, {00}, {KEY_MINUS}, {KEY_LEFTSHIFT, KEY_LEFT_BRACKET}, {KEY_LEFTSHIFT, KEY_9}, {KEY_LEFTSHIFT, KEY_0}, {KEY_LEFTSHIFT, KEY_RIGHT_BRACKET}},
+    {{KEY_PERIOD}, {KEY_1}, {KEY_2}, {KEY_3}, {KEY_GRAVE_ACCENT}, {00}, {00}, {00}, {KEY_LEFT_BRACKET}, {KEY_LEFTSHIFT, KEY_COMMA}, {KEY_LEFTSHIFT, KEY_PERIOD}, {KEY_RIGHT_BRACKET}},
     {{KEY_LEFTSHIFT}, {KEY_RIGHTALT}, {KEY_LEFT_GUI}, {KEY_SPACEBAR}, {KEY_CAPS_LOCK}, {KEY_LEFTCONTROL}, {00}, {00}, {KEY_RIGHT_FN}, {KEY_LEFTALT}, {KEY_RIGHTALT}, {KEY_RIGHTSHIFT}}
     },
 
@@ -100,12 +100,34 @@ static uint8_t const matrixFnZq[2][8][12][3] =
     {{00}, {00}, {00}, {00}, {00}, {00}, {00}, {00}, {00}, {00}, {00}, {00}},
     {{00}, {00}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {00}, {00}},
     {{00}, {00}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {00}, {00}},
-    {{00}, {00}, {00}, {00}, {00}, {0}, {0}, {00}, {00}, {00}, {00}, {00}},
-    {{KEY_F12}, {KEY_F7}, {KEY_F8}, {KEY_F9}, {00}, {0}, {0}, {00}, {KEY_VOLUME_UP}, {KEY_MUTE}, {KEY_VOLUME_DOWN}, {00}},
-    {{KEY_F11}, {KEY_F4}, {KEY_F5}, {KEY_F6}, {00}, {KEY_PRINTSCREEN}, {KEY_SCROLL_LOCK}, {KEY_LEFTARROW}, {KEY_DOWNARROW}, {KEY_UPARROW}, {KEY_RIGHTARROW}, {00}},
-    {{KEY_F10}, {KEY_F1}, {KEY_F2}, {KEY_F3}, {00}, {KEY_PAUSE}, {00}, {00}, {00}, {00}, {00}, {00}},
-    {{00}, {KEY_RIGHTALT}, {KEY_LEFT_GUI}, {KEY_BACKSPACE}, {KEY_CAPS_LOCK}, {KEY_LEFTCONTROL}, {00}, {00}, {00}, {KEY_LEFTALT}, {KEY_RIGHTALT}, {00}}
+    {{00}, {00}, {KEY_F16}, {00}, {00}, {0}, {0}, {00}, {00}, {KEY_LEFTSHIFT, KEY_INSERT}, {00}, {00}},
+    {{KEY_F11}, {KEY_F12}, {KEY_F13}, {KEY_F14}, {KEY_F15}, {0}, {0}, {KEY_F17}, {KEY_F18}, {KEY_F19}, {KEY_F20}, {00}},
+    {{KEY_F6}, {KEY_F7}, {KEY_F8}, {KEY_F9}, {KEY_F10}, {KEY_PRINTSCREEN}, {KEY_SCROLL_LOCK}, {KEY_LEFTARROW}, {KEY_DOWNARROW}, {KEY_UPARROW}, {KEY_RIGHTARROW}, {KEY_F21}},
+    {{KEY_F1}, {KEY_F2}, {KEY_F3}, {KEY_F4}, {KEY_F5}, {KEY_PAUSE}, {KEY_INSERT}, {00}, {00}, {00}, {00}, {00}},
+    {{00}, {KEY_RIGHTALT}, {KEY_LEFTCONTROL}, {KEY_BACKSPACE}, {KEY_CAPS_LOCK}, {KEY_LEFT_GUI}, {00}, {00}, {00}, {KEY_LEFTALT}, {KEY_RIGHTALT}, {00}}
     },
+};
+
+static const uint8_t cmd_ls[] = {
+    KEY_SPACEBAR,
+    KEY_L,
+    KEY_S,
+    KEY_SPACEBAR,
+    KEY_MINUS,
+    KEY_A,
+    KEY_H,
+    KEY_L,
+    KEY_S,
+    KEY_SPACEBAR,
+    KEY_MINUS,
+    KEY_MINUS,
+    KEY_C,
+    KEY_O,
+    KEY_L,
+    KEY_O,
+    KEY_R,
+    KEY_ENTER,
+    0,
 };
 
 static uint8_t const matrixFn109[4][3] =
@@ -758,9 +780,16 @@ static int8_t processKeys(const uint8_t* current, uint8_t* processed, uint8_t* r
                 case KEY_ZQ_HOMEDIR:
                     if (make) {
                         emitKey(0);
-                        emitKey(KEY_ZQ_TILDE_MACRO);
+                        emitKey(KEY_ZQ_MACRO_TILDE);
                         emitKey(KEY_SLASH);
                         xmit = XMIT_IN_ORDER;
+                    }
+                    break;
+                case KEY_ZQ_SOFTTAB2:
+                    if (make) {
+                        emitKey(KEY_SPACEBAR);
+                        emitKey(KEY_SPACEBAR);
+                        xmit = XMIT_MACRO;
                     }
                     break;
                 default:
@@ -795,6 +824,421 @@ static int8_t processKeys(const uint8_t* current, uint8_t* processed, uint8_t* r
                     break;
                 case KEY_RIGHTSHIFT:
                     modifiers |= MOD_RIGHTSHIFT;
+                    break;
+                /* free -mt */
+                case KEY_F1:
+                    if (make) {
+                        static const uint8_t s[] = {
+                            KEY_F,
+                            KEY_R,
+                            KEY_E,
+                            KEY_E,
+                            KEY_SPACEBAR,
+                            KEY_MINUS,
+                            KEY_M,
+                            KEY_T,
+                            KEY_ENTER,
+                            0,
+                        };
+                        emitString(s);
+                        xmit = XMIT_MACRO;
+                    }
+                    break;
+                /* find -name '.*.*' | sort */
+                case KEY_F2:
+                    if (make) {
+                        static const uint8_t s[] = {
+                            KEY_F,
+                            KEY_I,
+                            KEY_N,
+                            KEY_D,
+                            KEY_SPACEBAR,
+                            KEY_MINUS,
+                            KEY_N,
+                            KEY_A,
+                            KEY_M,
+                            KEY_E,
+                            KEY_SPACEBAR,
+                            KEY_QUOTE,
+                            KEY_ZQ_MACRO_ASTERISK,
+                            KEY_ZQ_MACRO_ASTERISK,
+                            KEY_QUOTE,
+                            KEY_ZQ_MACRO_PIPE,
+                            KEY_S,
+                            KEY_O,
+                            KEY_R,
+                            KEY_T,
+                            KEY_LEFTARROW,
+                            KEY_LEFTARROW,
+                            KEY_LEFTARROW,
+                            KEY_LEFTARROW,
+                            KEY_LEFTARROW,
+                            KEY_LEFTARROW,
+                            KEY_LEFTARROW,
+                            0,
+                        };
+                        emitString(s);
+                        xmit = XMIT_MACRO;
+                    }
+                    break;
+                /* env|sort|less */
+                case KEY_F3:
+                    if (make) {
+                        static const uint8_t s[] = {
+                            KEY_E,
+                            KEY_N,
+                            KEY_V,
+                            KEY_ZQ_MACRO_PIPE,
+                            KEY_S,
+                            KEY_O,
+                            KEY_R,
+                            KEY_T,
+                            KEY_ZQ_MACRO_PIPE,
+                            KEY_L,
+                            KEY_E,
+                            KEY_S,
+                            KEY_S,
+                            KEY_ENTER,
+                            0,
+                        };
+                        emitString(s);
+                        xmit = XMIT_MACRO;
+                    }
+                    break;
+                /* ip a<RET> */
+                case KEY_F4:
+                    if (make) {
+                        static const uint8_t s[] = {
+                            KEY_I,
+                            KEY_P,
+                            KEY_SPACEBAR,
+                            KEY_A,
+                            KEY_ENTER,
+                            0,
+                        };
+                        emitString(s);
+                        xmit = XMIT_MACRO;
+                    }
+                    break;
+                /* diff -bu */
+                case KEY_F5:
+                    if (make) {
+                        static const uint8_t s[] = {
+                            KEY_D,
+                            KEY_I,
+                            KEY_F,
+                            KEY_F,
+                            KEY_SPACEBAR,
+                            KEY_MINUS,
+                            KEY_B,
+                            KEY_U,
+                            KEY_SPACEBAR,
+                            0,
+                        };
+                        emitString(s);
+                        xmit = XMIT_MACRO;
+                    }
+                    break;
+                /* df -h --print-type<RET> */
+                case KEY_F6:
+                    if (make) {
+                        static const uint8_t s[] = {
+                            KEY_D,
+                            KEY_F,
+                            KEY_SPACEBAR,
+                            KEY_MINUS,
+                            KEY_H,
+                            KEY_SPACEBAR,
+                            KEY_MINUS,
+                            KEY_MINUS,
+                            KEY_P,
+                            KEY_R,
+                            KEY_I,
+                            KEY_N,
+                            KEY_T,
+                            KEY_MINUS,
+                            KEY_T,
+                            KEY_Y,
+                            KEY_P,
+                            KEY_E,
+                            KEY_ENTER,
+                            0,
+                        };
+                        emitString(s);
+                        xmit = XMIT_MACRO;
+                    }
+                    break;
+                /* ps aux|less<RET>/ */
+                case KEY_F7:
+                    if (make) {
+                        static const uint8_t s[] = {
+                            KEY_P,
+                            KEY_S,
+                            KEY_SPACEBAR,
+                            KEY_A,
+                            KEY_U,
+                            KEY_X,
+                            KEY_ZQ_MACRO_PIPE,
+                            KEY_L,
+                            KEY_E,
+                            KEY_S,
+                            KEY_S,
+                            KEY_ENTER,
+                            KEY_SLASH,
+                            0,
+                        };
+                        emitString(s);
+                        xmit = XMIT_MACRO;
+                    }
+                    break;
+                /* ls */
+                case KEY_F8:
+                    if (make) {
+                        emitString(cmd_ls);
+                        xmit = XMIT_MACRO;
+                    }
+                    break;
+                /* ls */
+                case KEY_F9:
+                    if (make) {
+                        static const uint8_t s[] = {
+                            KEY_SPACEBAR,
+                            KEY_ZQ_MACRO_PIPE,
+                            KEY_L,
+                            KEY_E,
+                            KEY_S,
+                            KEY_S,
+                            KEY_ENTER,
+                            0,
+                        };
+                        emitString(s);
+                        xmit = XMIT_MACRO;
+                    }
+                    break;
+                /* grep */
+                case KEY_F10:
+                    if (make) {
+                        static const uint8_t s[] = {
+                            KEY_SPACEBAR,
+                            KEY_ZQ_MACRO_PIPE,
+                            KEY_G,
+                            KEY_R,
+                            KEY_E,
+                            KEY_P,
+                            KEY_SPACEBAR,
+                            0,
+                        };
+                        emitString(s);
+                        xmit = XMIT_MACRO;
+                    }
+                    break;
+                /* KEY_F11: SKIP */
+                /* top<RET>eE */
+                case KEY_F12:
+                    if (make) {
+                        static const uint8_t s[] = {
+                            KEY_T,
+                            KEY_O,
+                            KEY_P,
+                            KEY_ENTER,
+                            KEY_E,
+                            /* Help top receive the capital E after a short
+                            delay. Otherwise top misses it. */
+                            KEY_SPACEBAR,
+                            KEY_SPACEBAR,
+                            KEY_SPACEBAR,
+                            KEY_SPACEBAR,
+                            KEY_SPACEBAR,
+                            KEY_SPACEBAR,
+                            KEY_SPACEBAR,
+                            KEY_SPACEBAR,
+                            KEY_ZQ_MACRO_CAP_E,
+                            0,
+                        };
+                        emitString(s);
+                        xmit = XMIT_MACRO;
+                    }
+                    break;
+                /* cd ..<RET>ls<RET>pwd<RET> */
+                case KEY_F13:
+                    if (make) {
+                        static const uint8_t s0[] = {
+                            KEY_C,
+                            KEY_D,
+                            KEY_SPACEBAR,
+                            KEY_PERIOD,
+                            KEY_PERIOD,
+                            KEY_ENTER,
+                            0,
+                        };
+                        static const uint8_t s1[] = {
+                            KEY_P,
+                            KEY_W,
+                            KEY_D,
+                            KEY_ENTER,
+                            0,
+                        };
+                        emitString(s0);
+                        emitString(cmd_ls);
+                        emitString(s1);
+                        xmit = XMIT_MACRO;
+                    }
+                    break;
+                /* cd <TAB><TAB> */
+                case KEY_F14:
+                    if (make) {
+                        static const uint8_t s[] = {
+                            KEY_C,
+                            KEY_D,
+                            KEY_SPACEBAR,
+                            KEY_TAB,
+                            KEY_TAB,
+                            0,
+                        };
+                        emitString(s);
+                        xmit = XMIT_MACRO;
+                    }
+                    break;
+                /* ping -c5 www.usa.gov<RET> */
+                case KEY_F15:
+                    if (make) {
+                        static const uint8_t s[] = {
+                            KEY_P,
+                            KEY_I,
+                            KEY_N,
+                            KEY_G,
+                            KEY_SPACEBAR,
+                            KEY_MINUS,
+                            KEY_C,
+                            KEY_5,
+                            KEY_SPACEBAR,
+                            KEY_W,
+                            KEY_W,
+                            KEY_W,
+                            KEY_PERIOD,
+                            KEY_U,
+                            KEY_S,
+                            KEY_A,
+                            KEY_PERIOD,
+                            KEY_G,
+                            KEY_O,
+                            KEY_V,
+                            KEY_ENTER,
+                            0,
+                        };
+                        emitString(s);
+                        xmit = XMIT_MACRO;
+                    }
+                    break;
+                /* pwd */
+                case KEY_F16:
+                    if (make) {
+                        static const uint8_t s[] = {
+                            KEY_P,
+                            KEY_W,
+                            KEY_D,
+                            KEY_ENTER,
+                            0,
+                        };
+                        emitString(s);
+                        xmit = XMIT_MACRO;
+                    }
+                    break;
+                /* sudo kill -9 */
+                case KEY_F17:
+                    if (make) {
+                        static const uint8_t s[] = {
+                            KEY_S,
+                            KEY_U,
+                            KEY_D,
+                            KEY_O,
+                            KEY_SPACEBAR,
+                            KEY_K,
+                            KEY_I,
+                            KEY_L,
+                            KEY_L,
+                            KEY_SPACEBAR,
+                            KEY_MINUS,
+                            KEY_9,
+                            KEY_SPACEBAR,
+                            0,
+                        };
+                        emitString(s);
+                        xmit = XMIT_MACRO;
+                    }
+                    break;
+                /* rm -frv */
+                case KEY_F18:
+                    if (make) {
+                        static const uint8_t s[] = {
+                            KEY_R,
+                            KEY_M,
+                            KEY_SPACEBAR,
+                            KEY_MINUS,
+                            KEY_F,
+                            KEY_R,
+                            KEY_V,
+                            KEY_SPACEBAR,
+                            0,
+                        };
+                        emitString(s);
+                        xmit = XMIT_MACRO;
+                    }
+                    break;
+                /* sudo */
+                case KEY_F19:
+                    if (make) {
+                        static const uint8_t s[] = {
+                            KEY_S,
+                            KEY_U,
+                            KEY_D,
+                            KEY_O,
+                            KEY_SPACEBAR,
+                            0,
+                        };
+                        emitString(s);
+                        xmit = XMIT_MACRO;
+                    }
+                    break;
+                /* sudo !!<RET> */
+                case KEY_F20:
+                    if (make) {
+                        static const uint8_t s[] = {
+                            KEY_S,
+                            KEY_U,
+                            KEY_D,
+                            KEY_O,
+                            KEY_SPACEBAR,
+                            KEY_ZQ_MACRO_BANG,
+                            KEY_ZQ_MACRO_BANG,
+                            KEY_ENTER,
+                            0,
+                        };
+                        emitString(s);
+                        xmit = XMIT_MACRO;
+                    }
+                    break;
+                /* >/dev/null */
+                case KEY_F21:
+                    if (make) {
+                        static const uint8_t s[] = {
+                            KEY_SPACEBAR,
+                            KEY_ZQ_MACRO_GT,
+                            KEY_SLASH,
+                            KEY_D,
+                            KEY_E,
+                            KEY_V,
+                            KEY_SLASH,
+                            KEY_N,
+                            KEY_U,
+                            KEY_L,
+                            KEY_L,
+                            KEY_SPACEBAR,
+                            0,
+                        };
+                        emitString(s);
+                        xmit = XMIT_MACRO;
+                    }
                     break;
                 default:
                     key = toggleKanaMode(key, current[0], make);

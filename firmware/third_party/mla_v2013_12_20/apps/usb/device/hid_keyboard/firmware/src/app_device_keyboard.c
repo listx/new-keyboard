@@ -566,10 +566,37 @@ uint8_t* APP_KeyboardScan(void)
             mod = MOD_LEFTSHIFT;
         }
 #endif
-        if (key == KEY_ZQ_TILDE_MACRO) {
+        switch (key) {
+        case KEY_ZQ_MACRO_TILDE:
             key = KEY_GRAVE_ACCENT;
             mod = MOD_LEFTSHIFT;
+            break;
+        case KEY_ZQ_MACRO_ASTERISK:
+            key = KEY_8;
+            mod = MOD_LEFTSHIFT;
+            break;
+        case KEY_ZQ_MACRO_PIPE:
+            key = KEY_BACKSLASH;
+            mod = MOD_LEFTSHIFT;
+            break;
+        case KEY_ZQ_MACRO_BANG:
+            key = KEY_1;
+            mod = MOD_LEFTSHIFT;
+            break;
+        case KEY_ZQ_MACRO_DQUOTE:
+            key = KEY_QUOTE;
+            mod = MOD_LEFTSHIFT;
+            break;
+        case KEY_ZQ_MACRO_GT:
+            key = KEY_PERIOD;
+            mod = MOD_LEFTSHIFT;
+            break;
+        case KEY_ZQ_MACRO_CAP_E:
+            key = KEY_E;
+            mod = MOD_LEFTSHIFT;
+            break;
         }
+
         if (inputReport.keys[0] && inputReport.keys[0] == key)
             inputReport.keys[0] = 0;    // BRK
         else {

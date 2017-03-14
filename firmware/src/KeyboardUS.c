@@ -25,6 +25,7 @@ static uint8_t const baseKeys[BASE_MAX + 1][5] =
     {KEY_U, KEY_S, KEY_MINUS, KEY_K, KEY_ENTER},
 };
 
+/*
 static uint8_t const matrixQwerty[8][12] =
 {
     KEY_LEFT_BRACKET, KEY_F2, KEY_F3, KEY_F4, KEY_F5, KEY_F6, KEY_F7, KEY_F8, KEY_F9, KEY_F10, KEY_F11, KEY_EQUAL,
@@ -60,16 +61,17 @@ static uint8_t const matrixColemak[8][12] =
     KEY_Z, KEY_X, KEY_C, KEY_V, KEY_B, KEY_TAB, KEY_ENTER, KEY_K, KEY_M, KEY_COMMA, KEY_PERIOD, KEY_SLASH,
     KEY_LEFTCONTROL, KEY_LEFT_GUI, KEY_LEFT_FN, KEY_LEFTSHIFT, KEY_SPACEBAR, KEY_LEFTALT, KEY_RIGHTALT, KEY_SPACEBAR, KEY_RIGHTSHIFT, KEY_RIGHT_FN, KEY_RIGHT_GUI, KEY_RIGHTCONTROL
 };
+*/
 
 static uint8_t const matrixZq[8][12] =
 {
     00, KEY_F2, KEY_F3, KEY_F4, KEY_F5, KEY_F6, KEY_F7, KEY_F8, KEY_F9, KEY_F10, KEY_F11, 00,
-    KEY_ESCAPE, KEY_F1, 0, 0, 0, 0, 0, 0, 0, 0, KEY_F12, KEY_GRAVE_ACCENT,
-    00, KEY_ZQ_EXCLAM, 0, 0, 0, 0, 0, 0, 0, 0, KEY_ZQ_DOLLAR, 00,
-    KEY_SEMICOLON, KEY_ZQ_HASH, KEY_ZQ_ASTERISK, 00 , 00, 0, 0, 00, 00, KEY_SLASH, KEY_ZQ_QMARK, KEY_PERIOD,
-    00,            KEY_Y, KEY_O, KEY_P, KEY_V,                    0, 0,                       KEY_F, KEY_D, KEY_T, KEY_R, 00,
-    KEY_A,         KEY_I, KEY_E, KEY_U, KEY_W,                    KEY_PAGEDOWN, KEY_PAGEUP,   KEY_H, KEY_J, KEY_K, KEY_L, KEY_N,
-    KEY_Z,         KEY_X, KEY_Q, KEY_QUOTE, KEY_ZQ_DOUBLE_QUOTE,  KEY_TAB, KEY_ENTER,         KEY_B, KEY_M, KEY_G, KEY_C, KEY_S,
+    KEY_ESCAPE, KEY_F1, 0, 0, 0, 0, 0, 0, 0, 0, KEY_F12, KEY_DELETE,
+    00, KEY_SLASH, 0, 0, 0, 0, 0, 0, 0, 0, KEY_ZQ_COLON, 00,
+    KEY_BACKSPACE, 00, KEY_TAB, 00 , 00,                        0, 0, 00, 00, KEY_ENTER, 00, KEY_BACKSPACE,
+    KEY_Z,         KEY_Y, KEY_O, KEY_P, KEY_V,                    0, 0,                             KEY_F, KEY_D, KEY_T, KEY_R, KEY_SEMICOLON,
+    KEY_A,         KEY_I, KEY_E, KEY_U, KEY_W,                    KEY_PAGEDOWN, KEY_PAGEUP,         KEY_H, KEY_J, KEY_K, KEY_L, KEY_N,
+    KEY_PERIOD,    KEY_X, KEY_Q, KEY_ZQ_DOUBLE_QUOTE, KEY_QUOTE,  KEY_END, KEY_HOME,                KEY_B, KEY_M, KEY_G, KEY_C, KEY_S,
     KEY_LEFTSHIFT, KEY_RIGHTALT, KEY_LEFT_GUI, KEY_SPACEBAR, KEY_CAPS_LOCK, KEY_LEFTCONTROL, KEY_FN2, KEY_COMMA, KEY_RIGHT_FN, KEY_LEFTALT, KEY_RIGHTALT, KEY_RIGHTSHIFT
 };
 
@@ -201,28 +203,14 @@ int8_t processKeysBase(const uint8_t* current, const uint8_t* processed, uint8_t
 
             /* Process special keys that are private to ZQ layout. */
             switch (key) {
-            case KEY_ZQ_QMARK:
             case KEY_ZQ_DOUBLE_QUOTE:
-            case KEY_ZQ_TILDE:
-            case KEY_ZQ_DOLLAR:
-            case KEY_ZQ_EXCLAM:
             case KEY_ZQ_COLON:
-            case KEY_ZQ_ASTERISK:
-            case KEY_ZQ_HASH:
-            case KEY_ZQ_UNDERSCORE:
 
                 modifiers |= MOD_LEFTSHIFT;
                 i = 8;
                 switch (key) {
-                    case KEY_ZQ_QMARK:          key_zq = KEY_SLASH; break;
                     case KEY_ZQ_DOUBLE_QUOTE:   key_zq = KEY_QUOTE; break;
-                    case KEY_ZQ_TILDE:          key_zq = KEY_GRAVE_ACCENT; break;
-                    case KEY_ZQ_DOLLAR:         key_zq = KEY_4; break;
-                    case KEY_ZQ_EXCLAM:         key_zq = KEY_1; break;
                     case KEY_ZQ_COLON:          key_zq = KEY_SEMICOLON; break;
-                    case KEY_ZQ_ASTERISK:       key_zq = KEY_8; break;
-                    case KEY_ZQ_HASH:           key_zq = KEY_3; break;
-                    case KEY_ZQ_UNDERSCORE:     key_zq = KEY_MINUS; break;
                 }
                 report[count++] = key_zq;
                 break;
@@ -234,12 +222,6 @@ int8_t processKeysBase(const uint8_t* current, const uint8_t* processed, uint8_t
              * key. But (unfortunately) this also means that these keys are
              * "unshiftable" from the base layer!
              */
-            case KEY_GRAVE_ACCENT:
-            case KEY_MINUS:
-            case KEY_EQUAL:
-            case KEY_LEFT_BRACKET:
-            case KEY_RIGHT_BRACKET:
-            case KEY_BACKSLASH:
             case KEY_SEMICOLON:
             case KEY_QUOTE:
             case KEY_COMMA:
@@ -340,6 +322,7 @@ uint8_t getKeyBase(uint8_t code)
     if (key)
         return key;
     switch (mode) {
+    /*
     case BASE_QWERTY:
         key = matrixQwerty[row][column];
         break;
@@ -349,6 +332,7 @@ uint8_t getKeyBase(uint8_t code)
     case BASE_COLEMAK:
         key = matrixColemak[row][column];
         break;
+    */
     case BASE_JIS:
         key = matrixJIS[row][column];
         break;
@@ -359,7 +343,7 @@ uint8_t getKeyBase(uint8_t code)
         key = matrixZq[row][column];
         break;
     default:
-        key = matrixQwerty[row][column];
+        key = matrixZq[row][column];
         break;
     }
     return processModKey(key);
