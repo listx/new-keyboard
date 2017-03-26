@@ -86,12 +86,12 @@ static uint8_t const matrixFnZq[2][8][12][3] =
     /* KEY_FN */
     {
     {{00}, {KEY_F2}, {KEY_F3}, {KEY_F4}, {KEY_F5}, {KEY_F6}, {KEY_F7}, {KEY_F8}, {KEY_F9}, {KEY_F10}, {KEY_F11}, {00}},
-    {{KEY_ESCAPE}, {KEY_F1}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {KEY_F12}, {KEY_DELETE}},
-    {{KEY_LEFTCONTROL, KEY_LEFTSHIFT, KEY_Z}, {KEY_ZQ_HOMEDIR}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {KEY_PRINTSCREEN}},
-    {{KEY_BACKSPACE}, {00}, {KEY_ZQ_SOFTTAB2}, {00}, {00}, {0}, {0}, {00}, {0}, {KEY_ENTER}, {00}, {KEY_BACKSPACE}},
+    {{KEY_ENTER}, {KEY_F1}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {KEY_F12}, {KEY_LEFTSHIFT, KEY_SEMICOLON}},
+    {{KEY_LEFTCONTROL, KEY_LEFTSHIFT, KEY_Z}, {KEY_ZQ_SOFTTAB2}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {KEY_DELETE}, {KEY_PRINTSCREEN}},
+    {{KEY_SLASH}, {00}, {KEY_ZQ_HOMEDIR}, {00}, {00}, {0}, {0}, {00}, {0}, {KEY_ZQ_SOFTTAB2}, {00}, {KEY_BACKSPACE}},
     {{00}, {KEY_7}, {KEY_8}, {KEY_9}, {00}, {0}, {0}, {00}, {KEY_BACKSLASH}, {KEY_LEFTSHIFT, KEY_MINUS}, {KEY_EQUAL}, {00}},
-    {{KEY_0}, {KEY_4}, {KEY_5}, {KEY_6}, {KEY_LEFTSHIFT, KEY_SLASH}, {00}, {00}, {KEY_MINUS}, {KEY_LEFTSHIFT, KEY_LEFT_BRACKET}, {KEY_LEFTSHIFT, KEY_9}, {KEY_LEFTSHIFT, KEY_0}, {KEY_LEFTSHIFT, KEY_RIGHT_BRACKET}},
-    {{KEY_PERIOD}, {KEY_1}, {KEY_2}, {KEY_3}, {KEY_GRAVE_ACCENT}, {00}, {00}, {00}, {KEY_LEFT_BRACKET}, {KEY_LEFTSHIFT, KEY_COMMA}, {KEY_LEFTSHIFT, KEY_PERIOD}, {KEY_RIGHT_BRACKET}},
+    {{KEY_0}, {KEY_4}, {KEY_5}, {KEY_6}, {KEY_GRAVE_ACCENT}, {00}, {00}, {KEY_MINUS}, {KEY_LEFTSHIFT, KEY_LEFT_BRACKET}, {KEY_LEFTSHIFT, KEY_9}, {KEY_LEFTSHIFT, KEY_0}, {KEY_LEFTSHIFT, KEY_RIGHT_BRACKET}},
+    {{KEY_PERIOD}, {KEY_1}, {KEY_2}, {KEY_3}, {00}, {00}, {00}, {00}, {KEY_LEFT_BRACKET}, {KEY_LEFTSHIFT, KEY_COMMA}, {KEY_LEFTSHIFT, KEY_PERIOD}, {KEY_RIGHT_BRACKET}},
     {{KEY_LEFTSHIFT}, {KEY_RIGHTALT}, {KEY_LEFT_GUI}, {KEY_SPACEBAR}, {KEY_CAPS_LOCK}, {KEY_LEFTCONTROL}, {00}, {00}, {KEY_RIGHT_FN}, {KEY_LEFTALT}, {KEY_RIGHTALT}, {KEY_RIGHTSHIFT}}
     },
 
@@ -100,10 +100,10 @@ static uint8_t const matrixFnZq[2][8][12][3] =
     {{00}, {00}, {00}, {00}, {00}, {00}, {00}, {00}, {00}, {00}, {00}, {00}},
     {{00}, {00}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {00}, {00}},
     {{00}, {00}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {0}, {00}, {00}},
-    {{00}, {00}, {KEY_F16}, {00}, {00}, {0}, {0}, {00}, {00}, {KEY_LEFTSHIFT, KEY_INSERT}, {00}, {00}},
+    {{00}, {00}, {KEY_F16}, {00}, {00}, {0}, {0}, {00}, {00}, {00}, {00}, {00}},
     {{KEY_F11}, {KEY_F12}, {KEY_F13}, {KEY_F14}, {KEY_F15}, {0}, {0}, {KEY_F17}, {KEY_F18}, {KEY_F19}, {KEY_F20}, {00}},
     {{KEY_F6}, {KEY_F7}, {KEY_F8}, {KEY_F9}, {KEY_F10}, {KEY_PRINTSCREEN}, {KEY_SCROLL_LOCK}, {KEY_LEFTARROW}, {KEY_DOWNARROW}, {KEY_UPARROW}, {KEY_RIGHTARROW}, {KEY_F21}},
-    {{KEY_F1}, {KEY_F2}, {KEY_F3}, {KEY_F4}, {KEY_F5}, {KEY_PAUSE}, {KEY_INSERT}, {00}, {00}, {00}, {00}, {00}},
+    {{KEY_F1}, {KEY_F2}, {KEY_F3}, {KEY_F4}, {KEY_F5}, {KEY_PAUSE}, {KEY_INSERT}, {00}, {00}, {00}, {00}, {KEY_LEFTSHIFT, KEY_INSERT}},
     {{00}, {KEY_RIGHTALT}, {KEY_LEFTCONTROL}, {KEY_BACKSPACE}, {KEY_CAPS_LOCK}, {KEY_LEFT_GUI}, {00}, {00}, {00}, {KEY_LEFTALT}, {KEY_RIGHTALT}, {00}}
     },
 };

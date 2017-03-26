@@ -66,9 +66,9 @@ static uint8_t const matrixColemak[8][12] =
 static uint8_t const matrixZq[8][12] =
 {
     00, KEY_F2, KEY_F3, KEY_F4, KEY_F5, KEY_F6, KEY_F7, KEY_F8, KEY_F9, KEY_F10, KEY_F11, 00,
-    KEY_ESCAPE, KEY_F1, 0, 0, 0, 0, 0, 0, 0, 0, KEY_F12, KEY_DELETE,
-    00, KEY_SLASH, 0, 0, 0, 0, 0, 0, 0, 0, KEY_ZQ_COLON, 00,
-    KEY_BACKSPACE, 00, KEY_TAB, 00 , 00,                        0, 0, 00, 00, KEY_ENTER, 00, KEY_BACKSPACE,
+    KEY_ENTER, KEY_F1, 0, 0, 0, 0, 0, 0, 0, 0, KEY_F12, KEY_ZQ_COLON,
+    00, 00, 0, 0, 0, 0, 0, 0, 0, 0, KEY_DELETE, 00,
+    KEY_SLASH, 00, KEY_ESCAPE, 00 , 00,                           0, 0, 00, 00, KEY_TAB, 00, KEY_BACKSPACE,
     KEY_Z,         KEY_Y, KEY_O, KEY_P, KEY_V,                    0, 0,                             KEY_F, KEY_D, KEY_T, KEY_R, KEY_SEMICOLON,
     KEY_A,         KEY_I, KEY_E, KEY_U, KEY_W,                    KEY_PAGEDOWN, KEY_PAGEUP,         KEY_H, KEY_J, KEY_K, KEY_L, KEY_N,
     KEY_PERIOD,    KEY_X, KEY_Q, KEY_ZQ_DOUBLE_QUOTE, KEY_QUOTE,  KEY_END, KEY_HOME,                KEY_B, KEY_M, KEY_G, KEY_C, KEY_S,
@@ -226,9 +226,8 @@ int8_t processKeysBase(const uint8_t* current, const uint8_t* processed, uint8_t
             case KEY_QUOTE:
             case KEY_COMMA:
             case KEY_PERIOD:
-            case KEY_SLASH:
                 report[count++] = key;
-                if (mode == BASE_ZQ || mode == BASE_QWERTY)
+                if (mode == BASE_ZQ)
                     i = 8;
                 break;
             default:
