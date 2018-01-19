@@ -69,9 +69,9 @@ static uint8_t const matrixZq[8][12] =
     KEY_ENTER, KEY_F1, 0, 0, 0, 0, 0, 0, 0, 0, KEY_F12, KEY_ZQ_COLON,
     00, 00, 0, 0, 0, 0, 0, 0, 0, 0, KEY_DELETE, 00,
     KEY_SLASH, 00, KEY_ESCAPE, 00 , 00,                           0, 0, 00, 00, KEY_TAB, 00, KEY_BACKSPACE,
-    KEY_ZQ_DOUBLE_QUOTE,     KEY_Y, KEY_O, KEY_P, KEY_V,          0, 0,                             KEY_F, KEY_D, KEY_T, KEY_R, KEY_SEMICOLON,
+    KEY_QUOTE,     KEY_Y, KEY_O, KEY_P, KEY_V,                    0, 0,                             KEY_F, KEY_D, KEY_T, KEY_R, KEY_SEMICOLON,
     KEY_A,         KEY_I, KEY_E, KEY_U, KEY_W,                    KEY_PAGEDOWN, KEY_PAGEUP,         KEY_H, KEY_J, KEY_K, KEY_L, KEY_N,
-    KEY_PERIOD,    KEY_X, KEY_Q, KEY_Z, KEY_QUOTE,                KEY_END, KEY_HOME,                KEY_B, KEY_M, KEY_G, KEY_C, KEY_S,
+    KEY_PERIOD,    KEY_X, KEY_Q, KEY_Z, KEY_ZQ_DOUBLE_QUOTE,      KEY_END, KEY_HOME,                KEY_B, KEY_M, KEY_G, KEY_C, KEY_S,
     KEY_LEFTSHIFT, KEY_RIGHTALT, KEY_LEFT_GUI, KEY_SPACEBAR, KEY_CAPS_LOCK, KEY_LEFTCONTROL, KEY_FN2, KEY_COMMA, KEY_RIGHT_FN, KEY_LEFTALT, KEY_RIGHTALT, KEY_RIGHTSHIFT
 };
 
